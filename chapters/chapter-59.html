@@ -1,0 +1,20 @@
+<section class="chapter" id="chapter-59" data-chapter="59">
+  <h1>1、拦截器的配置</h1>
+  <div class="chapter-content">
+<p>SpringMVC中的拦截器用于拦截控制器方法的执行</p>
+<p>SpringMVC中的拦截器需要实现HandlerInterceptor</p>
+<p>SpringMVC的拦截器必须在SpringMVC的配置文件中进行配置：</p>
+<div class="codehilite"><pre><span></span><code><span class="nt">&lt;bean</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;com.atguigu.interceptor.FirstInterceptor&quot;</span><span class="nt">&gt;&lt;/bean&gt;</span>
+<span class="nt">&lt;ref</span><span class="w"> </span><span class="na">bean=</span><span class="s">&quot;firstInterceptor&quot;</span><span class="nt">&gt;&lt;/ref&gt;</span>
+<span class="cm">&lt;!-- 以上两种配置方式都是对DispatcherServlet所处理的所有的请求进行拦截 --&gt;</span>
+<span class="nt">&lt;mvc:interceptor&gt;</span>
+<span class="w">    </span><span class="nt">&lt;mvc:mapping</span><span class="w"> </span><span class="na">path=</span><span class="s">&quot;/**&quot;</span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;mvc:exclude-mapping</span><span class="w"> </span><span class="na">path=</span><span class="s">&quot;/testRequestEntity&quot;</span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;ref</span><span class="w"> </span><span class="na">bean=</span><span class="s">&quot;firstInterceptor&quot;</span><span class="nt">&gt;&lt;/ref&gt;</span>
+<span class="nt">&lt;/mvc:interceptor&gt;</span>
+<span class="cm">&lt;!-- </span>
+<span class="cm">    以上配置方式可以通过ref或bean标签设置拦截器，通过mvc:mapping设置需要拦截的请求，通过mvc:exclude-mapping设置需要排除的请求，即不需要拦截的请求</span>
+<span class="cm">--&gt;</span>
+</code></pre></div>
+  </div>
+</section>

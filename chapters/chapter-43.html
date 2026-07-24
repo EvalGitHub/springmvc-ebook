@@ -1,0 +1,22 @@
+<section class="chapter" id="chapter-43" data-chapter="43">
+  <h1>3、具体功能：访问首页</h1>
+  <div class="chapter-content">
+<h5 id="aview-controller">a&gt;配置view-controller</h5>
+<div class="codehilite"><pre><span></span><code><span class="nt">&lt;mvc:view-controller</span><span class="w"> </span><span class="na">path=</span><span class="s">&quot;/&quot;</span><span class="w"> </span><span class="na">view-name=</span><span class="s">&quot;index&quot;</span><span class="nt">/&gt;</span>
+</code></pre></div>
+
+<h5 id="b">b&gt;创建页面</h5>
+<div class="codehilite"><pre><span></span><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="p">&lt;</span><span class="nt">html</span> <span class="na">lang</span><span class="o">=</span><span class="s">&quot;en&quot;</span> <span class="na">xmlns:th</span><span class="o">=</span><span class="s">&quot;http://www.thymeleaf.org&quot;</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">charset</span><span class="o">=</span><span class="s">&quot;UTF-8&quot;</span> <span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>Title<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>首页<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">a</span> <span class="na">th:href</span><span class="o">=</span><span class="s">&quot;@{/employee}&quot;</span><span class="p">&gt;</span>访问员工信息<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</code></pre></div>
+  </div>
+</section>

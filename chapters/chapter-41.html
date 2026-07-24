@@ -1,0 +1,118 @@
+<section class="chapter" id="chapter-41" data-chapter="41">
+  <h1>1、准备工作</h1>
+  <div class="chapter-content">
+<p>和传统 CRUD 一样，实现对员工信息的增删改查。</p>
+<ul>
+<li>
+<p>搭建环境</p>
+</li>
+<li>
+<p>准备实体类</p>
+</li>
+</ul>
+<p>```java
+  package com.atguigu.mvc.bean;</p>
+<p>public class Employee {</p>
+<div class="codehilite"><pre><span></span><code><span class="w"> </span><span class="nv">private</span><span class="w"> </span><span class="nv">Integer</span><span class="w"> </span><span class="nv">id</span><span class="c1">;</span>
+<span class="w"> </span><span class="nv">private</span><span class="w"> </span><span class="nv">String</span><span class="w"> </span><span class="nv">lastName</span><span class="c1">;</span>
+
+<span class="w"> </span><span class="nv">private</span><span class="w"> </span><span class="nv">String</span><span class="w"> </span><span class="nv">email</span><span class="c1">;</span>
+<span class="w"> </span><span class="o">//</span><span class="mi">1</span><span class="w"> </span><span class="nv">male</span>,<span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="nv">female</span>
+<span class="w"> </span><span class="nv">private</span><span class="w"> </span><span class="nv">Integer</span><span class="w"> </span><span class="nv">gender</span><span class="c1">;</span>
+
+<span class="w"> </span><span class="nv">public</span><span class="w"> </span><span class="nv">Integer</span><span class="w"> </span><span class="nv">getId</span><span class="ss">()</span><span class="w"> </span>{
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nv">id</span><span class="c1">;</span>
+<span class="w"> </span>}
+
+<span class="w"> </span><span class="nv">public</span><span class="w"> </span><span class="nv">void</span><span class="w"> </span><span class="nv">setId</span><span class="ss">(</span><span class="nv">Integer</span><span class="w"> </span><span class="nv">id</span><span class="ss">)</span><span class="w"> </span>{
+<span class="w">    </span><span class="nv">this</span>.<span class="nv">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">id</span><span class="c1">;</span>
+<span class="w"> </span>}
+
+<span class="w"> </span><span class="nv">public</span><span class="w"> </span><span class="nv">String</span><span class="w"> </span><span class="nv">getLastName</span><span class="ss">()</span><span class="w"> </span>{
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nv">lastName</span><span class="c1">;</span>
+<span class="w"> </span>}
+
+<span class="w"> </span><span class="nv">public</span><span class="w"> </span><span class="nv">void</span><span class="w"> </span><span class="nv">setLastName</span><span class="ss">(</span><span class="nv">String</span><span class="w"> </span><span class="nv">lastName</span><span class="ss">)</span><span class="w"> </span>{
+<span class="w">    </span><span class="nv">this</span>.<span class="nv">lastName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">lastName</span><span class="c1">;</span>
+<span class="w"> </span>}
+
+<span class="w"> </span><span class="nv">public</span><span class="w"> </span><span class="nv">String</span><span class="w"> </span><span class="nv">getEmail</span><span class="ss">()</span><span class="w"> </span>{
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nv">email</span><span class="c1">;</span>
+<span class="w"> </span>}
+
+<span class="w"> </span><span class="nv">public</span><span class="w"> </span><span class="nv">void</span><span class="w"> </span><span class="nv">setEmail</span><span class="ss">(</span><span class="nv">String</span><span class="w"> </span><span class="nv">email</span><span class="ss">)</span><span class="w"> </span>{
+<span class="w">    </span><span class="nv">this</span>.<span class="nv">email</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">email</span><span class="c1">;</span>
+<span class="w"> </span>}
+
+<span class="w"> </span><span class="nv">public</span><span class="w"> </span><span class="nv">Integer</span><span class="w"> </span><span class="nv">getGender</span><span class="ss">()</span><span class="w"> </span>{
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nv">gender</span><span class="c1">;</span>
+<span class="w"> </span>}
+
+<span class="w"> </span><span class="nv">public</span><span class="w"> </span><span class="nv">void</span><span class="w"> </span><span class="nv">setGender</span><span class="ss">(</span><span class="nv">Integer</span><span class="w"> </span><span class="nv">gender</span><span class="ss">)</span><span class="w"> </span>{
+<span class="w">    </span><span class="nv">this</span>.<span class="nv">gender</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">gender</span><span class="c1">;</span>
+<span class="w"> </span>}
+
+<span class="w"> </span><span class="nv">public</span><span class="w"> </span><span class="nv">Employee</span><span class="ss">(</span><span class="nv">Integer</span><span class="w"> </span><span class="nv">id</span>,<span class="w"> </span><span class="nv">String</span><span class="w"> </span><span class="nv">lastName</span>,<span class="w"> </span><span class="nv">String</span><span class="w"> </span><span class="nv">email</span>,<span class="w"> </span><span class="nv">Integer</span><span class="w"> </span><span class="nv">gender</span><span class="ss">)</span><span class="w"> </span>{
+<span class="w">    </span><span class="nv">super</span><span class="ss">()</span><span class="c1">;</span>
+<span class="w">    </span><span class="nv">this</span>.<span class="nv">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">id</span><span class="c1">;</span>
+<span class="w">    </span><span class="nv">this</span>.<span class="nv">lastName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">lastName</span><span class="c1">;</span>
+<span class="w">    </span><span class="nv">this</span>.<span class="nv">email</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">email</span><span class="c1">;</span>
+<span class="w">    </span><span class="nv">this</span>.<span class="nv">gender</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">gender</span><span class="c1">;</span>
+<span class="w"> </span>}
+
+<span class="w"> </span><span class="nv">public</span><span class="w"> </span><span class="nv">Employee</span><span class="ss">()</span><span class="w"> </span>{
+<span class="w"> </span>}
+</code></pre></div>
+
+<p>}
+  ```</p>
+<ul>
+<li>准备dao模拟数据</li>
+</ul>
+<p>```java
+  package com.atguigu.mvc.dao;</p>
+<p>import java.util.Collection;
+  import java.util.HashMap;
+  import java.util.Map;</p>
+<p>import com.atguigu.mvc.bean.Employee;
+  import org.springframework.stereotype.Repository;</p>
+<p>@Repository
+  public class EmployeeDao {</p>
+<div class="codehilite"><pre><span></span><code><span class="w"> </span><span class="n">private</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="n">Map</span><span class="o">&lt;</span><span class="n">Integer</span><span class="p">,</span><span class="w"> </span><span class="n">Employee</span><span class="o">&gt;</span><span class="w"> </span><span class="n">employees</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">null</span><span class="p">;</span>
+
+<span class="w"> </span><span class="k">static</span><span class="p">{</span>
+<span class="w">    </span><span class="n">employees</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">new</span><span class="w"> </span><span class="n">HashMap</span><span class="o">&lt;</span><span class="n">Integer</span><span class="p">,</span><span class="w"> </span><span class="n">Employee</span><span class="o">&gt;</span><span class="p">();</span>
+
+<span class="w">    </span><span class="n">employees</span><span class="p">.</span><span class="n">put</span><span class="p">(</span><span class="mi">1001</span><span class="p">,</span><span class="w"> </span><span class="n">new</span><span class="w"> </span><span class="n">Employee</span><span class="p">(</span><span class="mi">1001</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;E-AA&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;aa@163.com&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">));</span>
+<span class="w">    </span><span class="n">employees</span><span class="p">.</span><span class="n">put</span><span class="p">(</span><span class="mi">1002</span><span class="p">,</span><span class="w"> </span><span class="n">new</span><span class="w"> </span><span class="n">Employee</span><span class="p">(</span><span class="mi">1002</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;E-BB&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;bb@163.com&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">));</span>
+<span class="w">    </span><span class="n">employees</span><span class="p">.</span><span class="n">put</span><span class="p">(</span><span class="mi">1003</span><span class="p">,</span><span class="w"> </span><span class="n">new</span><span class="w"> </span><span class="n">Employee</span><span class="p">(</span><span class="mi">1003</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;E-CC&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;cc@163.com&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">));</span>
+<span class="w">    </span><span class="n">employees</span><span class="p">.</span><span class="n">put</span><span class="p">(</span><span class="mi">1004</span><span class="p">,</span><span class="w"> </span><span class="n">new</span><span class="w"> </span><span class="n">Employee</span><span class="p">(</span><span class="mi">1004</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;E-DD&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;dd@163.com&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">));</span>
+<span class="w">    </span><span class="n">employees</span><span class="p">.</span><span class="n">put</span><span class="p">(</span><span class="mi">1005</span><span class="p">,</span><span class="w"> </span><span class="n">new</span><span class="w"> </span><span class="n">Employee</span><span class="p">(</span><span class="mi">1005</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;E-EE&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;ee@163.com&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">));</span>
+<span class="w"> </span><span class="p">}</span>
+
+<span class="w"> </span><span class="n">private</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="n">Integer</span><span class="w"> </span><span class="n">initId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1006</span><span class="p">;</span>
+
+<span class="w"> </span><span class="n">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="n">save</span><span class="p">(</span><span class="n">Employee</span><span class="w"> </span><span class="n">employee</span><span class="p">){</span>
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="n">employee</span><span class="p">.</span><span class="n">getId</span><span class="p">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">null</span><span class="p">){</span>
+<span class="w">       </span><span class="n">employee</span><span class="p">.</span><span class="n">setId</span><span class="p">(</span><span class="n">initId</span><span class="o">++</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="n">employees</span><span class="p">.</span><span class="n">put</span><span class="p">(</span><span class="n">employee</span><span class="p">.</span><span class="n">getId</span><span class="p">(),</span><span class="w"> </span><span class="n">employee</span><span class="p">);</span>
+<span class="w"> </span><span class="p">}</span>
+
+<span class="w"> </span><span class="n">public</span><span class="w"> </span><span class="n">Collection</span><span class="o">&lt;</span><span class="n">Employee</span><span class="o">&gt;</span><span class="w"> </span><span class="n">getAll</span><span class="p">(){</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">employees</span><span class="p">.</span><span class="n">values</span><span class="p">();</span>
+<span class="w"> </span><span class="p">}</span>
+
+<span class="w"> </span><span class="n">public</span><span class="w"> </span><span class="n">Employee</span><span class="w"> </span><span class="n">get</span><span class="p">(</span><span class="n">Integer</span><span class="w"> </span><span class="kt">id</span><span class="p">){</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">employees</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="kt">id</span><span class="p">);</span>
+<span class="w"> </span><span class="p">}</span>
+
+<span class="w"> </span><span class="n">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="n">delete</span><span class="p">(</span><span class="n">Integer</span><span class="w"> </span><span class="kt">id</span><span class="p">){</span>
+<span class="w">    </span><span class="n">employees</span><span class="p">.</span><span class="n">remove</span><span class="p">(</span><span class="kt">id</span><span class="p">);</span>
+<span class="w"> </span><span class="p">}</span>
+</code></pre></div>
+
+<p>}
+  ```</p>
+  </div>
+</section>

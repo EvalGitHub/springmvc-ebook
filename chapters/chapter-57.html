@@ -1,0 +1,31 @@
+<section class="chapter" id="chapter-57" data-chapter="57">
+  <h1>1、文件下载</h1>
+  <div class="chapter-content">
+<p>使用ResponseEntity实现下载文件的功能</p>
+<div class="codehilite"><pre><span></span><code><span class="nd">@RequestMapping</span><span class="p">(</span><span class="s">&quot;/testDown&quot;</span><span class="p">)</span>
+<span class="kd">public</span><span class="w"> </span><span class="n">ResponseEntity</span><span class="o">&lt;</span><span class="kt">byte</span><span class="o">[]&gt;</span><span class="w"> </span><span class="nf">testResponseEntity</span><span class="p">(</span><span class="n">HttpSession</span><span class="w"> </span><span class="n">session</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">IOException</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">//获取ServletContext对象</span>
+<span class="w">    </span><span class="n">ServletContext</span><span class="w"> </span><span class="n">servletContext</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">session</span><span class="p">.</span><span class="na">getServletContext</span><span class="p">();</span>
+<span class="w">    </span><span class="c1">//获取服务器中文件的真实路径</span>
+<span class="w">    </span><span class="n">String</span><span class="w"> </span><span class="n">realPath</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">servletContext</span><span class="p">.</span><span class="na">getRealPath</span><span class="p">(</span><span class="s">&quot;/static/img/1.jpg&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="c1">//创建输入流</span>
+<span class="w">    </span><span class="n">InputStream</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">FileInputStream</span><span class="p">(</span><span class="n">realPath</span><span class="p">);</span>
+<span class="w">    </span><span class="c1">//创建字节数组</span>
+<span class="w">    </span><span class="kt">byte</span><span class="o">[]</span><span class="w"> </span><span class="n">bytes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">byte</span><span class="o">[</span><span class="n">is</span><span class="p">.</span><span class="na">available</span><span class="p">()</span><span class="o">]</span><span class="p">;</span>
+<span class="w">    </span><span class="c1">//将流读到字节数组中</span>
+<span class="w">    </span><span class="n">is</span><span class="p">.</span><span class="na">read</span><span class="p">(</span><span class="n">bytes</span><span class="p">);</span>
+<span class="w">    </span><span class="c1">//创建HttpHeaders对象设置响应头信息</span>
+<span class="w">    </span><span class="n">MultiValueMap</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">headers</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">HttpHeaders</span><span class="p">();</span>
+<span class="w">    </span><span class="c1">//设置要下载方式以及下载文件的名字</span>
+<span class="w">    </span><span class="n">headers</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="s">&quot;Content-Disposition&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;attachment;filename=1.jpg&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="c1">//设置响应状态码</span>
+<span class="w">    </span><span class="n">HttpStatus</span><span class="w"> </span><span class="n">statusCode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HttpStatus</span><span class="p">.</span><span class="na">OK</span><span class="p">;</span>
+<span class="w">    </span><span class="c1">//创建ResponseEntity对象</span>
+<span class="w">    </span><span class="n">ResponseEntity</span><span class="o">&lt;</span><span class="kt">byte</span><span class="o">[]&gt;</span><span class="w"> </span><span class="n">responseEntity</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ResponseEntity</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="n">bytes</span><span class="p">,</span><span class="w"> </span><span class="n">headers</span><span class="p">,</span><span class="w"> </span><span class="n">statusCode</span><span class="p">);</span>
+<span class="w">    </span><span class="c1">//关闭输入流</span>
+<span class="w">    </span><span class="n">is</span><span class="p">.</span><span class="na">close</span><span class="p">();</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">responseEntity</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+  </div>
+</section>

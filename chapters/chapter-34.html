@@ -1,0 +1,13 @@
+<section class="chapter" id="chapter-34" data-chapter="34">
+  <h1>1、ThymeleafView</h1>
+  <div class="chapter-content">
+<p>当控制器方法中所设置的视图名称没有任何前缀时，此时的视图名称会被SpringMVC配置文件中所配置的视图解析器解析，视图名称拼接视图前缀和视图后缀所得到的最终路径，会通过转发的方式实现跳转</p>
+<div class="codehilite"><pre><span></span><code><span class="nd">@RequestMapping</span><span class="p">(</span><span class="s">&quot;/testHello&quot;</span><span class="p">)</span>
+<span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">testHello</span><span class="p">(){</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;hello&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p><img alt="" src="assets/images/img002.png" /></p>
+  </div>
+</section>

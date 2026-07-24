@@ -1,0 +1,11 @@
+<section class="chapter" id="chapter-30" data-chapter="30">
+  <h1>5、使用ModelMap向request域对象共享数据</h1>
+  <div class="chapter-content">
+<div class="codehilite"><pre><span></span><code><span class="nd">@RequestMapping</span><span class="p">(</span><span class="s">&quot;/testModelMap&quot;</span><span class="p">)</span>
+<span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">testModelMap</span><span class="p">(</span><span class="n">ModelMap</span><span class="w"> </span><span class="n">modelMap</span><span class="p">){</span>
+<span class="w">    </span><span class="n">modelMap</span><span class="p">.</span><span class="na">addAttribute</span><span class="p">(</span><span class="s">&quot;testScope&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;hello,ModelMap&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;success&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+  </div>
+</section>

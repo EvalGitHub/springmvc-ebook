@@ -1,0 +1,42 @@
+<section class="chapter" id="chapter-40" data-chapter="40">
+  <h1>3、HiddenHttpMethodFilter</h1>
+  <div class="chapter-content">
+<p>由于浏览器只支持发送get和post方式的请求，那么该如何发送put和delete请求呢？</p>
+<p>SpringMVC 提供了 <strong>HiddenHttpMethodFilter</strong> 帮助我们<strong>将 POST 请求转换为 DELETE 或 PUT 请求</strong></p>
+<p><strong>HiddenHttpMethodFilter</strong> 处理put和delete请求的条件：</p>
+<p>a&gt;当前请求的请求方式必须为post</p>
+<p>b&gt;当前请求必须传输请求参数_method</p>
+<p>满足以上条件，<strong>HiddenHttpMethodFilter</strong> 过滤器就会将当前请求的请求方式转换为请求参数_method的值，因此请求参数_method的值才是最终的请求方式</p>
+<p>在web.xml中注册<strong>HiddenHttpMethodFilter</strong> </p>
+<div class="codehilite"><pre><span></span><code><span class="nt">&lt;filter&gt;</span>
+<span class="w">    </span><span class="nt">&lt;filter-name&gt;</span>HiddenHttpMethodFilter<span class="nt">&lt;/filter-name&gt;</span>
+<span class="w">    </span><span class="nt">&lt;filter-class&gt;</span>org.springframework.web.filter.HiddenHttpMethodFilter<span class="nt">&lt;/filter-class&gt;</span>
+<span class="nt">&lt;/filter&gt;</span>
+<span class="nt">&lt;filter-mapping&gt;</span>
+<span class="w">    </span><span class="nt">&lt;filter-name&gt;</span>HiddenHttpMethodFilter<span class="nt">&lt;/filter-name&gt;</span>
+<span class="w">    </span><span class="nt">&lt;url-pattern&gt;</span>/*<span class="nt">&lt;/url-pattern&gt;</span>
+<span class="nt">&lt;/filter-mapping&gt;</span>
+</code></pre></div>
+
+<blockquote>
+<p>注：</p>
+<p>目前为止，SpringMVC中提供了两个过滤器：CharacterEncodingFilter和HiddenHttpMethodFilter</p>
+<p>在web.xml中注册时，必须先注册CharacterEncodingFilter，再注册HiddenHttpMethodFilter</p>
+<p>原因：</p>
+<ul>
+<li>
+<p>在 CharacterEncodingFilter 中通过 request.setCharacterEncoding(encoding) 方法设置字符集的</p>
+</li>
+<li>
+<p>request.setCharacterEncoding(encoding) 方法要求前面不能有任何获取请求参数的操作</p>
+</li>
+<li>
+<p>而 HiddenHttpMethodFilter 恰恰有一个获取请求方式的操作：</p>
+</li>
+<li>
+<p><code>String paramValue = request.getParameter(this.methodParam);</code></p>
+</li>
+</ul>
+</blockquote>
+  </div>
+</section>

@@ -1,0 +1,44 @@
+<section class="chapter" id="chapter-48" data-chapter="48">
+  <h1>8、具体功能：跳转到更新数据页面</h1>
+  <div class="chapter-content">
+<h5 id="a">a&gt;修改超链接</h5>
+<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">a</span> <span class="na">th:href</span><span class="o">=</span><span class="s">&quot;@{&#39;/employee/&#39;+${employee.id}}&quot;</span><span class="p">&gt;</span>update<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+</code></pre></div>
+
+<h5 id="b">b&gt;控制器方法</h5>
+<div class="codehilite"><pre><span></span><code><span class="nd">@RequestMapping</span><span class="p">(</span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;/employee/{id}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">method</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">RequestMethod</span><span class="p">.</span><span class="na">GET</span><span class="p">)</span>
+<span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">getEmployeeById</span><span class="p">(</span><span class="nd">@PathVariable</span><span class="p">(</span><span class="s">&quot;id&quot;</span><span class="p">)</span><span class="w"> </span><span class="n">Integer</span><span class="w"> </span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">Model</span><span class="w"> </span><span class="n">model</span><span class="p">){</span>
+<span class="w">    </span><span class="n">Employee</span><span class="w"> </span><span class="n">employee</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">employeeDao</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
+<span class="w">    </span><span class="n">model</span><span class="p">.</span><span class="na">addAttribute</span><span class="p">(</span><span class="s">&quot;employee&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">employee</span><span class="p">);</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;employee_update&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<h5 id="cemployee_updatehtml">c&gt;创建employee_update.html</h5>
+<div class="codehilite"><pre><span></span><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="p">&lt;</span><span class="nt">html</span> <span class="na">lang</span><span class="o">=</span><span class="s">&quot;en&quot;</span> <span class="na">xmlns:th</span><span class="o">=</span><span class="s">&quot;http://www.thymeleaf.org&quot;</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">charset</span><span class="o">=</span><span class="s">&quot;UTF-8&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>Update Employee<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">form</span> <span class="na">th:action</span><span class="o">=</span><span class="s">&quot;@{/employee}&quot;</span> <span class="na">method</span><span class="o">=</span><span class="s">&quot;post&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;hidden&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;_method&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;put&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;hidden&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;id&quot;</span> <span class="na">th:value</span><span class="o">=</span><span class="s">&quot;${employee.id}&quot;</span><span class="p">&gt;</span>
+    lastName:<span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;lastName&quot;</span> <span class="na">th:value</span><span class="o">=</span><span class="s">&quot;${employee.lastName}&quot;</span><span class="p">&gt;&lt;</span><span class="nt">br</span><span class="p">&gt;</span>
+    email:<span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;email&quot;</span> <span class="na">th:value</span><span class="o">=</span><span class="s">&quot;${employee.email}&quot;</span><span class="p">&gt;&lt;</span><span class="nt">br</span><span class="p">&gt;</span>
+    <span class="cm">&lt;!--</span>
+<span class="cm">        th:field=&quot;${employee.gender}&quot;可用于单选框或复选框的回显</span>
+<span class="cm">        若单选框的value和employee.gender的值一致，则添加checked=&quot;checked&quot;属性</span>
+<span class="cm">    --&gt;</span>
+    gender:<span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;radio&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;gender&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;1&quot;</span> <span class="na">th:field</span><span class="o">=</span><span class="s">&quot;${employee.gender}&quot;</span><span class="p">&gt;</span>male
+    <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;radio&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;gender&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;0&quot;</span> <span class="na">th:field</span><span class="o">=</span><span class="s">&quot;${employee.gender}&quot;</span><span class="p">&gt;</span>female<span class="p">&lt;</span><span class="nt">br</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;submit&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;update&quot;</span><span class="p">&gt;&lt;</span><span class="nt">br</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>
+
+<span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</code></pre></div>
+  </div>
+</section>

@@ -1,0 +1,19 @@
+<section class="chapter" id="chapter-12" data-chapter="12">
+  <h1>2、@RequestMapping注解的位置</h1>
+  <div class="chapter-content">
+<p>@RequestMapping标识一个类：设置映射请求的请求路径的初始信息</p>
+<p>@RequestMapping标识一个方法：设置映射请求请求路径的具体信息</p>
+<div class="codehilite"><pre><span></span><code><span class="nd">@Controller</span>
+<span class="nd">@RequestMapping</span><span class="p">(</span><span class="s">&quot;/test&quot;</span><span class="p">)</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">RequestMappingController</span><span class="w"> </span><span class="p">{</span>
+
+<span class="w">    </span><span class="c1">//此时请求映射所映射的请求的请求路径为：/test/testRequestMapping</span>
+<span class="w">    </span><span class="nd">@RequestMapping</span><span class="p">(</span><span class="s">&quot;/testRequestMapping&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">testRequestMapping</span><span class="p">(){</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;success&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="p">}</span>
+</code></pre></div>
+  </div>
+</section>

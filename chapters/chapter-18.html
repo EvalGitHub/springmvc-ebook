@@ -1,0 +1,18 @@
+<section class="chapter" id="chapter-18" data-chapter="18">
+  <h1>8、SpringMVC支持路径中的占位符（重点）</h1>
+  <div class="chapter-content">
+<p>原始方式：/deleteUser?id=1</p>
+<p>rest方式：/deleteUser/1</p>
+<p>SpringMVC路径中的占位符常用于RESTful风格中，当请求路径中将某些数据通过路径的方式传输到服务器中，就可以在相应的@RequestMapping注解的value属性中通过占位符{xxx}表示传输的数据，在通过@PathVariable注解，将占位符所表示的数据赋值给控制器方法的形参</p>
+<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">a</span> <span class="na">th:href</span><span class="o">=</span><span class="s">&quot;@{/testRest/1/admin}&quot;</span><span class="p">&gt;</span>测试路径中的占位符--&gt;/testRest<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;</span><span class="nt">br</span><span class="p">&gt;</span>
+</code></pre></div>
+
+<div class="codehilite"><pre><span></span><code><span class="nd">@RequestMapping</span><span class="p">(</span><span class="s">&quot;/testRest/{id}/{username}&quot;</span><span class="p">)</span>
+<span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">testRest</span><span class="p">(</span><span class="nd">@PathVariable</span><span class="p">(</span><span class="s">&quot;id&quot;</span><span class="p">)</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="nd">@PathVariable</span><span class="p">(</span><span class="s">&quot;username&quot;</span><span class="p">)</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">username</span><span class="p">){</span>
+<span class="w">    </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;id:&quot;</span><span class="o">+</span><span class="n">id</span><span class="o">+</span><span class="s">&quot;,username:&quot;</span><span class="o">+</span><span class="n">username</span><span class="p">);</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;success&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="c1">//最终输出的内容为--&gt;id:1,username:admin</span>
+</code></pre></div>
+  </div>
+</section>

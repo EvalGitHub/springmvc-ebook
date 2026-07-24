@@ -1,0 +1,62 @@
+<section class="chapter" id="chapter-6" data-chapter="6">
+  <h1>3、配置web.xml</h1>
+  <div class="chapter-content">
+<p>注册SpringMVC的前端控制器DispatcherServlet</p>
+<h5 id="a">a&gt;默认配置方式</h5>
+<p>此配置作用下，SpringMVC的配置文件默认位于WEB-INF下，默认名称为\<servlet-name>-servlet.xml，例如，以下配置所对应SpringMVC的配置文件位于WEB-INF下，文件名为springMVC-servlet.xml</p>
+<div class="codehilite"><pre><span></span><code><span class="cm">&lt;!-- 配置SpringMVC的前端控制器，对浏览器发送的请求统一进行处理 --&gt;</span>
+<span class="nt">&lt;servlet&gt;</span>
+<span class="w">    </span><span class="nt">&lt;servlet-name&gt;</span>springMVC<span class="nt">&lt;/servlet-name&gt;</span>
+<span class="w">    </span><span class="nt">&lt;servlet-class&gt;</span>org.springframework.web.servlet.DispatcherServlet<span class="nt">&lt;/servlet-class&gt;</span>
+<span class="nt">&lt;/servlet&gt;</span>
+<span class="nt">&lt;servlet-mapping&gt;</span>
+<span class="w">    </span><span class="nt">&lt;servlet-name&gt;</span>springMVC<span class="nt">&lt;/servlet-name&gt;</span>
+<span class="w">    </span><span class="cm">&lt;!--</span>
+<span class="cm">        设置springMVC的核心控制器所能处理的请求的请求路径</span>
+<span class="cm">        /所匹配的请求可以是/login或.html或.js或.css方式的请求路径</span>
+<span class="cm">        但是/不能匹配.jsp请求路径的请求</span>
+<span class="cm">    --&gt;</span>
+<span class="w">    </span><span class="nt">&lt;url-pattern&gt;</span>/<span class="nt">&lt;/url-pattern&gt;</span>
+<span class="nt">&lt;/servlet-mapping&gt;</span>
+</code></pre></div>
+
+<h5 id="b">b&gt;扩展配置方式</h5>
+<p>可通过init-param标签设置SpringMVC配置文件的位置和名称，通过load-on-startup标签设置SpringMVC前端控制器DispatcherServlet的初始化时间</p>
+<div class="codehilite"><pre><span></span><code><span class="cm">&lt;!-- 配置SpringMVC的前端控制器，对浏览器发送的请求统一进行处理 --&gt;</span>
+<span class="nt">&lt;servlet&gt;</span>
+<span class="w">    </span><span class="nt">&lt;servlet-name&gt;</span>springMVC<span class="nt">&lt;/servlet-name&gt;</span>
+<span class="w">    </span><span class="nt">&lt;servlet-class&gt;</span>org.springframework.web.servlet.DispatcherServlet<span class="nt">&lt;/servlet-class&gt;</span>
+<span class="w">    </span><span class="cm">&lt;!-- 通过初始化参数指定SpringMVC配置文件的位置和名称 --&gt;</span>
+<span class="w">    </span><span class="nt">&lt;init-param&gt;</span>
+<span class="w">        </span><span class="cm">&lt;!-- contextConfigLocation为固定值 --&gt;</span>
+<span class="w">        </span><span class="nt">&lt;param-name&gt;</span>contextConfigLocation<span class="nt">&lt;/param-name&gt;</span>
+<span class="w">        </span><span class="cm">&lt;!-- 使用classpath:表示从类路径查找配置文件，例如maven工程中的src/main/resources --&gt;</span>
+<span class="w">        </span><span class="nt">&lt;param-value&gt;</span>classpath:springMVC.xml<span class="nt">&lt;/param-value&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/init-param&gt;</span>
+<span class="w">    </span><span class="cm">&lt;!-- </span>
+<span class="cm">        作为框架的核心组件，在启动过程中有大量的初始化操作要做</span>
+<span class="cm">        而这些操作放在第一次请求时才执行会严重影响访问速度</span>
+<span class="cm">        因此需要通过此标签将启动控制DispatcherServlet的初始化时间提前到服务器启动时</span>
+<span class="cm">    --&gt;</span>
+<span class="w">    </span><span class="nt">&lt;load-on-startup&gt;</span>1<span class="nt">&lt;/load-on-startup&gt;</span>
+<span class="nt">&lt;/servlet&gt;</span>
+<span class="nt">&lt;servlet-mapping&gt;</span>
+<span class="w">    </span><span class="nt">&lt;servlet-name&gt;</span>springMVC<span class="nt">&lt;/servlet-name&gt;</span>
+<span class="w">    </span><span class="cm">&lt;!--</span>
+<span class="cm">        设置springMVC的核心控制器所能处理的请求的请求路径</span>
+<span class="cm">        /所匹配的请求可以是/login或.html或.js或.css方式的请求路径</span>
+<span class="cm">        但是/不能匹配.jsp请求路径的请求</span>
+<span class="cm">    --&gt;</span>
+<span class="w">    </span><span class="nt">&lt;url-pattern&gt;</span>/<span class="nt">&lt;/url-pattern&gt;</span>
+<span class="nt">&lt;/servlet-mapping&gt;</span>
+</code></pre></div>
+
+<blockquote>
+<p>注：</p>
+<p>\<url-pattern>标签中使用/和/*的区别：</p>
+<p>/所匹配的请求可以是/login或.html或.js或.css方式的请求路径，但是/不能匹配.jsp请求路径的请求</p>
+<p>因此就可以避免在访问jsp页面时，该请求被DispatcherServlet处理，从而找不到相应的页面</p>
+<p>/*则能够匹配所有请求，例如在使用过滤器时，若需要对所有请求进行过滤，就需要使用/*的写法</p>
+</blockquote>
+  </div>
+</section>

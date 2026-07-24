@@ -1,0 +1,11 @@
+<section class="chapter" id="chapter-31" data-chapter="31">
+  <h1>6、Model、ModelMap、Map的关系</h1>
+  <div class="chapter-content">
+<p>Model、ModelMap、Map类型的参数其实本质上都是 BindingAwareModelMap 类型的</p>
+<div class="codehilite"><pre><span></span><code><span class="n">public</span><span class="w"> </span><span class="n">interface</span><span class="w"> </span><span class="n">Model</span><span class="p">{}</span>
+<span class="n">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="n">ModelMap</span><span class="w"> </span><span class="k">extends</span><span class="w"> </span><span class="n">LinkedHashMap</span><span class="o">&lt;</span><span class="nb nb-Type">String</span><span class="p">,</span><span class="w"> </span><span class="nb nb-Type">Object</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{}</span>
+<span class="n">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="n">ExtendedModelMap</span><span class="w"> </span><span class="k">extends</span><span class="w"> </span><span class="n">ModelMap</span><span class="w"> </span><span class="n">implements</span><span class="w"> </span><span class="n">Model</span><span class="w"> </span><span class="p">{}</span>
+<span class="n">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="n">BindingAwareModelMap</span><span class="w"> </span><span class="k">extends</span><span class="w"> </span><span class="n">ExtendedModelMap</span><span class="w"> </span><span class="p">{}</span>
+</code></pre></div>
+  </div>
+</section>

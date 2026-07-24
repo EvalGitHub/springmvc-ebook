@@ -1,0 +1,12 @@
+<section class="chapter" id="chapter-49" data-chapter="49">
+  <h1>9、具体功能：执行更新</h1>
+  <div class="chapter-content">
+<h5 id="a">a&gt;控制器方法</h5>
+<div class="codehilite"><pre><span></span><code><span class="nd">@RequestMapping</span><span class="p">(</span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;/employee&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">method</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">RequestMethod</span><span class="p">.</span><span class="na">PUT</span><span class="p">)</span>
+<span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">updateEmployee</span><span class="p">(</span><span class="n">Employee</span><span class="w"> </span><span class="n">employee</span><span class="p">){</span>
+<span class="w">    </span><span class="n">employeeDao</span><span class="p">.</span><span class="na">save</span><span class="p">(</span><span class="n">employee</span><span class="p">);</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;redirect:/employee&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+  </div>
+</section>

@@ -1,0 +1,28 @@
+<section class="chapter" id="chapter-15" data-chapter="15">
+  <h1>5、@RequestMapping注解的params属性（了解）</h1>
+  <div class="chapter-content">
+<p>@RequestMapping注解的params属性通过请求的请求参数匹配请求映射</p>
+<p>@RequestMapping注解的params属性是一个字符串类型的数组，可以通过四种表达式设置请求参数和请求映射的匹配关系</p>
+<p>"param"：要求请求映射所匹配的请求必须携带param请求参数</p>
+<p>"!param"：要求请求映射所匹配的请求必须不能携带param请求参数</p>
+<p>"param=value"：要求请求映射所匹配的请求必须携带param请求参数且param=value</p>
+<p>"param!=value"：要求请求映射所匹配的请求必须携带param请求参数但是param!=value</p>
+<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">a</span> <span class="na">th:href</span><span class="o">=</span><span class="s">&quot;@{/test(username=&#39;admin&#39;,password=123456)&quot;</span><span class="p">&gt;</span>测试@RequestMapping的params属性--&gt;/test<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;</span><span class="nt">br</span><span class="p">&gt;</span>
+</code></pre></div>
+
+<div class="codehilite"><pre><span></span><code><span class="nd">@RequestMapping</span><span class="p">(</span>
+<span class="w">        </span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="s">&quot;/testRequestMapping&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/test&quot;</span><span class="p">}</span>
+<span class="w">        </span><span class="p">,</span><span class="n">method</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="n">RequestMethod</span><span class="p">.</span><span class="na">GET</span><span class="p">,</span><span class="w"> </span><span class="n">RequestMethod</span><span class="p">.</span><span class="na">POST</span><span class="p">}</span>
+<span class="w">        </span><span class="p">,</span><span class="n">params</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="s">&quot;username&quot;</span><span class="p">,</span><span class="s">&quot;password!=123456&quot;</span><span class="p">}</span>
+<span class="p">)</span>
+<span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">testRequestMapping</span><span class="p">(){</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;success&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<blockquote>
+<p>注：</p>
+<p>若当前请求满足@RequestMapping注解的value和method属性，但是不满足params属性，此时页面回报错400：Parameter conditions "username, password!=123456" not met for actual request parameters: username={admin}, password={123456}</p>
+</blockquote>
+  </div>
+</section>

@@ -1,0 +1,18 @@
+<section class="chapter" id="chapter-37" data-chapter="37">
+  <h1>4、视图控制器view-controller</h1>
+  <div class="chapter-content">
+<p>当控制器方法中，仅仅用来实现页面跳转，即只需要设置视图名称时，可以将处理器方法使用view-controller标签进行表示</p>
+<div class="codehilite"><pre><span></span><code><span class="cm">&lt;!--</span>
+<span class="cm">    path：设置处理的请求地址</span>
+<span class="cm">    view-name：设置请求地址所对应的视图名称</span>
+<span class="cm">--&gt;</span>
+<span class="nt">&lt;mvc:view-controller</span><span class="w"> </span><span class="na">path=</span><span class="s">&quot;/testView&quot;</span><span class="w"> </span><span class="na">view-name=</span><span class="s">&quot;success&quot;</span><span class="nt">&gt;&lt;/mvc:view-controller&gt;</span>
+</code></pre></div>
+
+<blockquote>
+<p>注：</p>
+<p>当SpringMVC中设置任何一个view-controller时，其他控制器中的请求映射将全部失效，此时需要在SpringMVC的核心配置文件中设置开启mvc注解驱动的标签：</p>
+<p><mvc:annotation-driven /></p>
+</blockquote>
+  </div>
+</section>

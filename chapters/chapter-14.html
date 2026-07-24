@@ -1,0 +1,34 @@
+<section class="chapter" id="chapter-14" data-chapter="14">
+  <h1>4、@RequestMapping注解的method属性</h1>
+  <div class="chapter-content">
+<p>@RequestMapping注解的method属性通过请求的请求方式（get或post）匹配请求映射</p>
+<p>@RequestMapping注解的method属性是一个RequestMethod类型的数组，表示该请求映射能够匹配多种请求方式的请求</p>
+<p>若当前请求的请求地址满足请求映射的value属性，但是请求方式不满足method属性，则浏览器报错405：Request method 'POST' not supported</p>
+<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">a</span> <span class="na">th:href</span><span class="o">=</span><span class="s">&quot;@{/test}&quot;</span><span class="p">&gt;</span>测试@RequestMapping的value属性--&gt;/test<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;</span><span class="nt">br</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">form</span> <span class="na">th:action</span><span class="o">=</span><span class="s">&quot;@{/test}&quot;</span> <span class="na">method</span><span class="o">=</span><span class="s">&quot;post&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;submit&quot;</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>
+</code></pre></div>
+
+<div class="codehilite"><pre><span></span><code><span class="nd">@RequestMapping</span><span class="p">(</span>
+<span class="w">        </span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="s">&quot;/testRequestMapping&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/test&quot;</span><span class="p">},</span>
+<span class="w">        </span><span class="n">method</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="n">RequestMethod</span><span class="p">.</span><span class="na">GET</span><span class="p">,</span><span class="w"> </span><span class="n">RequestMethod</span><span class="p">.</span><span class="na">POST</span><span class="p">}</span>
+<span class="p">)</span>
+<span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">testRequestMapping</span><span class="p">(){</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;success&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<blockquote>
+<p>注：</p>
+<p>1、对于处理指定请求方式的控制器方法，SpringMVC中提供了@RequestMapping的派生注解</p>
+<p>处理get请求的映射--&gt;@GetMapping</p>
+<p>处理post请求的映射--&gt;@PostMapping</p>
+<p>处理put请求的映射--&gt;@PutMapping</p>
+<p>处理delete请求的映射--&gt;@DeleteMapping</p>
+<p>2、常用的请求方式有get，post，put，delete</p>
+<p>但是目前浏览器只支持get和post，若在form表单提交时，为method设置了其他请求方式的字符串（put或delete），则按照默认的请求方式get处理</p>
+<p>若要发送put和delete请求，则需要通过spring提供的过滤器HiddenHttpMethodFilter，在RESTful部分会讲到</p>
+</blockquote>
+  </div>
+</section>

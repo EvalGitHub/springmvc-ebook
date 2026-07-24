@@ -1,0 +1,50 @@
+<section class="chapter" id="chapter-64" data-chapter="64">
+  <h1>1、创建初始化类，代替web.xml</h1>
+  <div class="chapter-content">
+<p>在Servlet3.0环境中，容器会在类路径中查找实现javax.servlet.ServletContainerInitializer接口的类，如果找到的话就用它来配置Servlet容器。
+Spring提供了这个接口的实现，名为SpringServletContainerInitializer，这个类反过来又会查找实现WebApplicationInitializer的类并将配置的任务交给它们来完成。Spring3.2引入了一个便利的WebApplicationInitializer基础实现，名为AbstractAnnotationConfigDispatcherServletInitializer，当我们的类扩展了AbstractAnnotationConfigDispatcherServletInitializer并将其部署到Servlet3.0容器的时候，容器会自动发现它，并用它来配置Servlet上下文。</p>
+<div class="codehilite"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">WebInit</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">AbstractAnnotationConfigDispatcherServletInitializer</span><span class="w"> </span><span class="p">{</span>
+
+<span class="w">    </span><span class="cm">/**</span>
+<span class="cm">     * 指定spring的配置类</span>
+<span class="cm">     * @return</span>
+<span class="cm">     */</span>
+<span class="w">    </span><span class="nd">@Override</span>
+<span class="w">    </span><span class="kd">protected</span><span class="w"> </span><span class="n">Class</span><span class="o">&lt;?&gt;[]</span><span class="w"> </span><span class="nf">getRootConfigClasses</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Class</span><span class="o">[]</span><span class="p">{</span><span class="n">SpringConfig</span><span class="p">.</span><span class="na">class</span><span class="p">};</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="cm">/**</span>
+<span class="cm">     * 指定SpringMVC的配置类</span>
+<span class="cm">     * @return</span>
+<span class="cm">     */</span>
+<span class="w">    </span><span class="nd">@Override</span>
+<span class="w">    </span><span class="kd">protected</span><span class="w"> </span><span class="n">Class</span><span class="o">&lt;?&gt;[]</span><span class="w"> </span><span class="nf">getServletConfigClasses</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Class</span><span class="o">[]</span><span class="p">{</span><span class="n">WebConfig</span><span class="p">.</span><span class="na">class</span><span class="p">};</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="cm">/**</span>
+<span class="cm">     * 指定DispatcherServlet的映射规则，即url-pattern</span>
+<span class="cm">     * @return</span>
+<span class="cm">     */</span>
+<span class="w">    </span><span class="nd">@Override</span>
+<span class="w">    </span><span class="kd">protected</span><span class="w"> </span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="nf">getServletMappings</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">String</span><span class="o">[]</span><span class="p">{</span><span class="s">&quot;/&quot;</span><span class="p">};</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="cm">/**</span>
+<span class="cm">     * 添加过滤器</span>
+<span class="cm">     * @return</span>
+<span class="cm">     */</span>
+<span class="w">    </span><span class="nd">@Override</span>
+<span class="w">    </span><span class="kd">protected</span><span class="w"> </span><span class="n">Filter</span><span class="o">[]</span><span class="w"> </span><span class="nf">getServletFilters</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">CharacterEncodingFilter</span><span class="w"> </span><span class="n">encodingFilter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">CharacterEncodingFilter</span><span class="p">();</span>
+<span class="w">        </span><span class="n">encodingFilter</span><span class="p">.</span><span class="na">setEncoding</span><span class="p">(</span><span class="s">&quot;UTF-8&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="n">encodingFilter</span><span class="p">.</span><span class="na">setForceRequestEncoding</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span>
+<span class="w">        </span><span class="n">HiddenHttpMethodFilter</span><span class="w"> </span><span class="n">hiddenHttpMethodFilter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">HiddenHttpMethodFilter</span><span class="p">();</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Filter</span><span class="o">[]</span><span class="p">{</span><span class="n">encodingFilter</span><span class="p">,</span><span class="w"> </span><span class="n">hiddenHttpMethodFilter</span><span class="p">};</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+  </div>
+</section>

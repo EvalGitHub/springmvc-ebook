@@ -1,0 +1,42 @@
+<section class="chapter" id="chapter-5" data-chapter="5">
+  <h1>2、创建maven工程</h1>
+  <div class="chapter-content">
+<h5 id="aweb">a&gt;添加web模块</h5>
+<h5 id="bwar">b&gt;打包方式：war</h5>
+<h5 id="c">c&gt;引入依赖</h5>
+<div class="codehilite"><pre><span></span><code><span class="nt">&lt;dependencies&gt;</span>
+<span class="w">    </span><span class="cm">&lt;!-- SpringMVC --&gt;</span>
+<span class="w">    </span><span class="nt">&lt;dependency&gt;</span>
+<span class="w">        </span><span class="nt">&lt;groupId&gt;</span>org.springframework<span class="nt">&lt;/groupId&gt;</span>
+<span class="w">        </span><span class="nt">&lt;artifactId&gt;</span>spring-webmvc<span class="nt">&lt;/artifactId&gt;</span>
+<span class="w">        </span><span class="nt">&lt;version&gt;</span>5.3.1<span class="nt">&lt;/version&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/dependency&gt;</span>
+
+<span class="w">    </span><span class="cm">&lt;!-- 日志 --&gt;</span>
+<span class="w">    </span><span class="nt">&lt;dependency&gt;</span>
+<span class="w">        </span><span class="nt">&lt;groupId&gt;</span>ch.qos.logback<span class="nt">&lt;/groupId&gt;</span>
+<span class="w">        </span><span class="nt">&lt;artifactId&gt;</span>logback-classic<span class="nt">&lt;/artifactId&gt;</span>
+<span class="w">        </span><span class="nt">&lt;version&gt;</span>1.2.3<span class="nt">&lt;/version&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/dependency&gt;</span>
+
+<span class="w">    </span><span class="cm">&lt;!-- ServletAPI --&gt;</span>
+<span class="w">    </span><span class="nt">&lt;dependency&gt;</span>
+<span class="w">        </span><span class="nt">&lt;groupId&gt;</span>javax.servlet<span class="nt">&lt;/groupId&gt;</span>
+<span class="w">        </span><span class="nt">&lt;artifactId&gt;</span>javax.servlet-api<span class="nt">&lt;/artifactId&gt;</span>
+<span class="w">        </span><span class="nt">&lt;version&gt;</span>3.1.0<span class="nt">&lt;/version&gt;</span>
+<span class="w">        </span><span class="nt">&lt;scope&gt;</span>provided<span class="nt">&lt;/scope&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/dependency&gt;</span>
+
+<span class="w">    </span><span class="cm">&lt;!-- Spring5和Thymeleaf整合包 --&gt;</span>
+<span class="w">    </span><span class="nt">&lt;dependency&gt;</span>
+<span class="w">        </span><span class="nt">&lt;groupId&gt;</span>org.thymeleaf<span class="nt">&lt;/groupId&gt;</span>
+<span class="w">        </span><span class="nt">&lt;artifactId&gt;</span>thymeleaf-spring5<span class="nt">&lt;/artifactId&gt;</span>
+<span class="w">        </span><span class="nt">&lt;version&gt;</span>3.0.12.RELEASE<span class="nt">&lt;/version&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/dependency&gt;</span>
+<span class="nt">&lt;/dependencies&gt;</span>
+</code></pre></div>
+
+<p>注：由于 Maven 的传递性，我们不必将所有需要的包全部配置依赖，而是配置最顶端的依赖，其他靠传递性导入。</p>
+<p><img alt="images" src="assets/images/img001.png" /></p>
+  </div>
+</section>

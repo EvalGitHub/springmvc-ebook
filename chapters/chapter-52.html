@@ -1,0 +1,14 @@
+<section class="chapter" id="chapter-52" data-chapter="52">
+  <h1>3、@ResponseBody</h1>
+  <div class="chapter-content">
+<p>@ResponseBody用于标识一个控制器方法，可以将该方法的返回值直接作为响应报文的响应体响应到浏览器</p>
+<div class="codehilite"><pre><span></span><code><span class="nd">@RequestMapping</span><span class="p">(</span><span class="s">&quot;/testResponseBody&quot;</span><span class="p">)</span>
+<span class="nd">@ResponseBody</span>
+<span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">testResponseBody</span><span class="p">(){</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;success&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>结果：浏览器页面显示success</p>
+  </div>
+</section>

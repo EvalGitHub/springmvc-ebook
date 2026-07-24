@@ -1,0 +1,19 @@
+<section class="chapter" id="chapter-13" data-chapter="13">
+  <h1>3、@RequestMapping注解的value属性</h1>
+  <div class="chapter-content">
+<p>@RequestMapping注解的value属性通过请求的请求地址匹配请求映射</p>
+<p>@RequestMapping注解的value属性是一个字符串类型的数组，表示该请求映射能够匹配多个请求地址所对应的请求</p>
+<p>@RequestMapping注解的value属性必须设置，至少通过请求地址匹配请求映射</p>
+<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">a</span> <span class="na">th:href</span><span class="o">=</span><span class="s">&quot;@{/testRequestMapping}&quot;</span><span class="p">&gt;</span>测试@RequestMapping的value属性--&gt;/testRequestMapping<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;</span><span class="nt">br</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">a</span> <span class="na">th:href</span><span class="o">=</span><span class="s">&quot;@{/test}&quot;</span><span class="p">&gt;</span>测试@RequestMapping的value属性--&gt;/test<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;</span><span class="nt">br</span><span class="p">&gt;</span>
+</code></pre></div>
+
+<div class="codehilite"><pre><span></span><code><span class="nd">@RequestMapping</span><span class="p">(</span>
+<span class="w">        </span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="s">&quot;/testRequestMapping&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/test&quot;</span><span class="p">}</span>
+<span class="p">)</span>
+<span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">testRequestMapping</span><span class="p">(){</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;success&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+  </div>
+</section>
