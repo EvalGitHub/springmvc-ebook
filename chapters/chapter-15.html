@@ -7,7 +7,9 @@
 <p>"!param"：要求请求映射所匹配的请求必须不能携带param请求参数</p>
 <p>"param=value"：要求请求映射所匹配的请求必须携带param请求参数且param=value</p>
 <p>"param!=value"：要求请求映射所匹配的请求必须携带param请求参数但是param!=value</p>
-<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">a</span> <span class="na">th:href</span><span class="o">=</span><span class="s">&quot;@{/test(username=&#39;admin&#39;,password=123456)&quot;</span><span class="p">&gt;</span>测试@RequestMapping的params属性--&gt;/test<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;</span><span class="nt">br</span><span class="p">&gt;</span>
+<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">a</span> <span class="na">th:href</span><span class="o">=</span><span class="s">&quot;@{/test(username=&#39;admin&#39;,password=123456)&quot;</span>
+  <span class="p">&gt;</span>测试@RequestMapping的params属性--&gt;/test<span class="p">&lt;/</span><span class="nt">a</span>
+<span class="p">&gt;&lt;</span><span class="nt">br</span> <span class="p">/&gt;</span>
 </code></pre></div>
 
 <div class="codehilite"><pre><span></span><code><span class="nd">@RequestMapping</span><span class="p">(</span>

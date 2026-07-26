@@ -2,7 +2,9 @@
   <h1>2、通过控制器方法的形参获取请求参数</h1>
   <div class="chapter-content">
 <p>在控制器方法的形参位置，设置和请求参数同名的形参，当浏览器发送请求，匹配到请求映射时，在DispatcherServlet中就会将请求参数赋值给相应的形参</p>
-<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">a</span> <span class="na">th:href</span><span class="o">=</span><span class="s">&quot;@{/testParam(username=&#39;admin&#39;,password=123456)}&quot;</span><span class="p">&gt;</span>测试获取请求参数--&gt;/testParam<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;</span><span class="nt">br</span><span class="p">&gt;</span>
+<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">a</span> <span class="na">th:href</span><span class="o">=</span><span class="s">&quot;@{/testParam(username=&#39;admin&#39;,password=123456)}&quot;</span>
+  <span class="p">&gt;</span>测试获取请求参数--&gt;/testParam<span class="p">&lt;/</span><span class="nt">a</span>
+<span class="p">&gt;&lt;</span><span class="nt">br</span> <span class="p">/&gt;</span>
 </code></pre></div>
 
 <div class="codehilite"><pre><span></span><code><span class="nd">@RequestMapping</span><span class="p">(</span><span class="s">&quot;/testParam&quot;</span><span class="p">)</span>

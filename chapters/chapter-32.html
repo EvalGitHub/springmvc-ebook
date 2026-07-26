@@ -1,11 +1,11 @@
 <section class="chapter" id="chapter-32" data-chapter="32">
-  <h1>7、向session域共享数据</h1>
+  <h1>6、Model、ModelMap、Map的关系</h1>
   <div class="chapter-content">
-<div class="codehilite"><pre><span></span><code><span class="nd">@RequestMapping</span><span class="p">(</span><span class="s">&quot;/testSession&quot;</span><span class="p">)</span>
-<span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">testSession</span><span class="p">(</span><span class="n">HttpSession</span><span class="w"> </span><span class="n">session</span><span class="p">){</span>
-<span class="w">    </span><span class="n">session</span><span class="p">.</span><span class="na">setAttribute</span><span class="p">(</span><span class="s">&quot;testSessionScope&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;hello,session&quot;</span><span class="p">);</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;success&quot;</span><span class="p">;</span>
-<span class="p">}</span>
+<p>Model、ModelMap、Map类型的参数其实本质上都是 BindingAwareModelMap 类型的</p>
+<div class="codehilite"><pre><span></span><code><span class="n">public</span><span class="w"> </span><span class="n">interface</span><span class="w"> </span><span class="n">Model</span><span class="p">{}</span>
+<span class="n">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="n">ModelMap</span><span class="w"> </span><span class="k">extends</span><span class="w"> </span><span class="n">LinkedHashMap</span><span class="o">&lt;</span><span class="nb nb-Type">String</span><span class="p">,</span><span class="w"> </span><span class="nb nb-Type">Object</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{}</span>
+<span class="n">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="n">ExtendedModelMap</span><span class="w"> </span><span class="k">extends</span><span class="w"> </span><span class="n">ModelMap</span><span class="w"> </span><span class="n">implements</span><span class="w"> </span><span class="n">Model</span><span class="w"> </span><span class="p">{}</span>
+<span class="n">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="n">BindingAwareModelMap</span><span class="w"> </span><span class="k">extends</span><span class="w"> </span><span class="n">ExtendedModelMap</span><span class="w"> </span><span class="p">{}</span>
 </code></pre></div>
   </div>
 </section>

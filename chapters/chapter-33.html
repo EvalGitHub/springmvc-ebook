@@ -1,12 +1,15 @@
 <section class="chapter" id="chapter-33" data-chapter="33">
-  <h1>8、向application域共享数据</h1>
+  <h1>7、向session域共享数据</h1>
   <div class="chapter-content">
-<div class="codehilite"><pre><span></span><code><span class="nd">@RequestMapping</span><span class="p">(</span><span class="s">&quot;/testApplication&quot;</span><span class="p">)</span>
-<span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">testApplication</span><span class="p">(</span><span class="n">HttpSession</span><span class="w"> </span><span class="n">session</span><span class="p">){</span>
-<span class="w">    </span><span class="n">ServletContext</span><span class="w"> </span><span class="n">application</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">session</span><span class="p">.</span><span class="na">getServletContext</span><span class="p">();</span>
-<span class="w">    </span><span class="n">application</span><span class="p">.</span><span class="na">setAttribute</span><span class="p">(</span><span class="s">&quot;testApplicationScope&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;hello,application&quot;</span><span class="p">);</span>
+<div class="codehilite"><pre><span></span><code><span class="nd">@RequestMapping</span><span class="p">(</span><span class="s">&quot;/testSession&quot;</span><span class="p">)</span>
+<span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">testSession</span><span class="p">(</span><span class="n">HttpSession</span><span class="w"> </span><span class="n">session</span><span class="p">){</span>
+<span class="w">    </span><span class="n">session</span><span class="p">.</span><span class="na">setAttribute</span><span class="p">(</span><span class="s">&quot;testSessionScope&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;hello,session&quot;</span><span class="p">);</span>
 <span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;success&quot;</span><span class="p">;</span>
 <span class="p">}</span>
+</code></pre></div>
+
+<div class="codehilite"><pre><span></span><code>// 获取
+<span class="p">&lt;</span><span class="nt">p</span> <span class="na">th:text</span><span class="o">=</span><span class="s">&quot;{session.testSessionScope}&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
 </code></pre></div>
   </div>
 </section>

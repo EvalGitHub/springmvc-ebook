@@ -3,5 +3,40 @@
   <div class="chapter-content">
 <p>@CookieValue是将cookie数据和控制器方法的形参创建映射关系</p>
 <p>@CookieValue注解一共有三个属性：value、required、defaultValue，用法同@RequestParam</p>
+<div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="nd">@RequestMapping</span><span class="p">(</span><span class="s">&quot;/getUserInfo3&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">getUserInfo3</span><span class="p">(</span>
+<span class="w">            </span><span class="nd">@RequestParam</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="s">&quot;id_&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">required</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"> </span><span class="n">defaultValue</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;1&quot;</span><span class="p">)</span><span class="w"> </span><span class="n">Integer</span><span class="w"> </span><span class="n">id</span><span class="p">,</span>
+<span class="w">            </span><span class="nd">@RequestParam</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="s">&quot;user_name&quot;</span><span class="p">)</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">user</span><span class="p">,</span>
+<span class="w">            </span><span class="nd">@RequestHeader</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="s">&quot;host&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">required</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"> </span><span class="n">defaultValue</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;localhost:8080&quot;</span><span class="p">)</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">host</span><span class="p">,</span>
+<span class="w">            </span><span class="err">@</span>
+<span class="w">            </span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">user</span><span class="o">+</span><span class="w"> </span><span class="s">&quot; &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot; &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">host</span><span class="p">);</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;userInfo&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+</code></pre></div>
+
+<blockquote>
+<ol>
+<li>
+<p>触发 Session 创建与 Cookie 生成
+   当你在代码中调用 HttpSession session = request.getSession();（或 request.getSession(true)）时，服务器会检查当前请求是否已经关联了一个 Session。如果没有，服务器就会在内存中为当前客户端创建一个新的 Session 对象，并生成一个全局唯一的 Session ID（在 Tomcat 中通常称为 JSESSIONID）。</p>
+</li>
+<li>
+<p>通过响应头下发 Cookie
+   Session 数据本身是保存在服务器端的，但为了让浏览器能在后续请求中“认出”自己，服务器会将这个 Session ID 作为一个特殊的 Cookie，通过 HTTP 响应头（Set-Cookie: JSESSIONID=xxx）发送给客户端。</p>
+</li>
+<li>
+<p>浏览器自动保存并携带
+   浏览器接收到响应后，会自动将这个 Cookie 保存在本地。在此之后，只要浏览器向该服务器发送请求，都会自动在 HTTP 请求头（Cookie 字段）中携带这个包含 Session ID 的 Cookie。</p>
+</li>
+<li>
+<p>服务器识别并找回 Session
+   服务器接收到后续请求时，会从请求头中提取出 Session ID，然后在服务端的 Session 存储区（如内存、数据库等）中查找对应的 Session 对象，从而获取之前保存的用户状态数据。
+   补充两个关键细节：
+   Cookie 只是载体：严格来说，Cookie 和 Session 是两种不同的技术。Cookie 是存在客户端的小文本，而 Session 是存在服务端的对象。Session 只是借助了 Cookie 来传递 ID，实际的大量数据（如购物车信息、用户对象）都保存在服务端，这既保证了安全性，又避免了客户端存储空间不足的问题。
+   如果浏览器禁用了 Cookie 怎么办？：如果客户端禁用了 Cookie，服务器无法通过上述方式下发和接收 Session ID。此时，服务器会启用备用方案——URL 重写机制。它会将 Session ID 直接拼接到 URL 的末尾（例如 url;jsessionid=ABCDEF），以此来维持会话状态</p>
+</li>
+</ol>
+</blockquote>
   </div>
 </section>

@@ -1,18 +1,19 @@
 <section class="chapter" id="chapter-37" data-chapter="37">
-  <h1>4、视图控制器view-controller</h1>
+  <h1>3、重定向视图</h1>
   <div class="chapter-content">
-<p>当控制器方法中，仅仅用来实现页面跳转，即只需要设置视图名称时，可以将处理器方法使用view-controller标签进行表示</p>
-<div class="codehilite"><pre><span></span><code><span class="cm">&lt;!--</span>
-<span class="cm">    path：设置处理的请求地址</span>
-<span class="cm">    view-name：设置请求地址所对应的视图名称</span>
-<span class="cm">--&gt;</span>
-<span class="nt">&lt;mvc:view-controller</span><span class="w"> </span><span class="na">path=</span><span class="s">&quot;/testView&quot;</span><span class="w"> </span><span class="na">view-name=</span><span class="s">&quot;success&quot;</span><span class="nt">&gt;&lt;/mvc:view-controller&gt;</span>
+<p>SpringMVC中默认的重定向视图是RedirectView</p>
+<p>当控制器方法中所设置的视图名称以"redirect:"为前缀时，创建RedirectView视图，此时的视图名称不会被SpringMVC配置文件中所配置的视图解析器解析，而是会将前缀"redirect:"去掉，剩余部分作为最终路径通过重定向的方式实现跳转</p>
+<p>例如"redirect:/"，"redirect:/employee"</p>
+<div class="codehilite"><pre><span></span><code><span class="nd">@RequestMapping</span><span class="p">(</span><span class="s">&quot;/testRedirect&quot;</span><span class="p">)</span>
+<span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">testRedirect</span><span class="p">(){</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;redirect:/testHello&quot;</span><span class="p">;</span>
+<span class="p">}</span>
 </code></pre></div>
 
+<p><img alt="image-20210706201602267" src="assets/images/img004.png" /></p>
 <blockquote>
 <p>注：</p>
-<p>当SpringMVC中设置任何一个view-controller时，其他控制器中的请求映射将全部失效，此时需要在SpringMVC的核心配置文件中设置开启mvc注解驱动的标签：</p>
-<p><mvc:annotation-driven /></p>
+<p>重定向视图在解析时，会先将redirect:前缀去掉，然后会判断剩余部分是否以/开头，若是则会自动拼接上下文路径</p>
 </blockquote>
   </div>
 </section>

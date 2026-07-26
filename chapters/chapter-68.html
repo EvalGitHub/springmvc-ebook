@@ -1,29 +1,10 @@
 <section class="chapter" id="chapter-68" data-chapter="68">
-  <h1>1、SpringMVC常用组件</h1>
+  <h1>4、测试功能</h1>
   <div class="chapter-content">
-<ul>
-<li>DispatcherServlet：<strong>前端控制器</strong>，不需要工程师开发，由框架提供</li>
-</ul>
-<p>作用：统一处理请求和响应，整个流程控制的中心，由它调用其它组件处理用户的请求</p>
-<ul>
-<li>HandlerMapping：<strong>处理器映射器</strong>，不需要工程师开发，由框架提供</li>
-</ul>
-<p>作用：根据请求的url、method等信息查找Handler，即控制器方法</p>
-<ul>
-<li>Handler：<strong>处理器</strong>，需要工程师开发</li>
-</ul>
-<p>作用：在DispatcherServlet的控制下Handler对具体的用户请求进行处理</p>
-<ul>
-<li>HandlerAdapter：<strong>处理器适配器</strong>，不需要工程师开发，由框架提供</li>
-</ul>
-<p>作用：通过HandlerAdapter对处理器（控制器方法）进行执行</p>
-<ul>
-<li>ViewResolver：<strong>视图解析器</strong>，不需要工程师开发，由框架提供</li>
-</ul>
-<p>作用：进行视图解析，得到相应的视图，例如：ThymeleafView、InternalResourceView、RedirectView</p>
-<ul>
-<li>View：<strong>视图</strong></li>
-</ul>
-<p>作用：将模型数据通过页面展示给用户</p>
+<div class="codehilite"><pre><span></span><code><span class="nd">@RequestMapping</span><span class="p">(</span><span class="s">&quot;/&quot;</span><span class="p">)</span>
+<span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">index</span><span class="p">(){</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;index&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
   </div>
 </section>

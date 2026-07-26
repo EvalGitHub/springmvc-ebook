@@ -1,29 +1,7 @@
 <section class="chapter" id="chapter-25" data-chapter="25">
-  <h1>7、解决获取请求参数的乱码问题</h1>
+  <h1>如果前端传递的参数多了，会不会抱错？</h1>
   <div class="chapter-content">
-<p>解决获取请求参数的乱码问题，可以使用SpringMVC提供的编码过滤器CharacterEncodingFilter，但是必须在web.xml中进行注册</p>
-<div class="codehilite"><pre><span></span><code><span class="cm">&lt;!--配置springMVC的编码过滤器--&gt;</span>
-<span class="nt">&lt;filter&gt;</span>
-<span class="w">    </span><span class="nt">&lt;filter-name&gt;</span>CharacterEncodingFilter<span class="nt">&lt;/filter-name&gt;</span>
-<span class="w">    </span><span class="nt">&lt;filter-class&gt;</span>org.springframework.web.filter.CharacterEncodingFilter<span class="nt">&lt;/filter-class&gt;</span>
-<span class="w">    </span><span class="nt">&lt;init-param&gt;</span>
-<span class="w">        </span><span class="nt">&lt;param-name&gt;</span>encoding<span class="nt">&lt;/param-name&gt;</span>
-<span class="w">        </span><span class="nt">&lt;param-value&gt;</span>UTF-8<span class="nt">&lt;/param-value&gt;</span>
-<span class="w">    </span><span class="nt">&lt;/init-param&gt;</span>
-<span class="w">    </span><span class="nt">&lt;init-param&gt;</span>
-<span class="w">        </span><span class="nt">&lt;param-name&gt;</span>forceResponseEncoding<span class="nt">&lt;/param-name&gt;</span>
-<span class="w">        </span><span class="nt">&lt;param-value&gt;</span>true<span class="nt">&lt;/param-value&gt;</span>
-<span class="w">    </span><span class="nt">&lt;/init-param&gt;</span>
-<span class="nt">&lt;/filter&gt;</span>
-<span class="nt">&lt;filter-mapping&gt;</span>
-<span class="w">    </span><span class="nt">&lt;filter-name&gt;</span>CharacterEncodingFilter<span class="nt">&lt;/filter-name&gt;</span>
-<span class="w">    </span><span class="nt">&lt;url-pattern&gt;</span>/*<span class="nt">&lt;/url-pattern&gt;</span>
-<span class="nt">&lt;/filter-mapping&gt;</span>
-</code></pre></div>
-
-<blockquote>
-<p>注：</p>
-<p>SpringMVC中处理编码的过滤器一定要配置到其他过滤器之前，否则无效</p>
-</blockquote>
+<p>不会报错。
+在 Spring MVC 中，如果前端传入的参数比后端实体类（POJO）的属性多，框架会自动忽略多余的参数，只匹配能对应上的属性进行赋值。</p>
   </div>
 </section>

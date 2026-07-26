@@ -1,178 +1,57 @@
 <section class="chapter" id="chapter-72" data-chapter="72">
-  <h1>Day01 - HelloWorld</h1>
+  <h1>4、SpringMVC的执行流程</h1>
   <div class="chapter-content">
-<p><strong>项目：springMVC-demo1</strong></p>
-<h3 id="pomxml">pom.xml</h3>
-<div class="codehilite"><pre><span></span><code><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
-<span class="nt">&lt;project</span><span class="w"> </span><span class="na">xmlns=</span><span class="s">&quot;http://maven.apache.org/POM/4.0.0&quot;</span>
-<span class="w">         </span><span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
-<span class="w">         </span><span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;</span><span class="nt">&gt;</span>
-<span class="w">    </span><span class="nt">&lt;modelVersion&gt;</span>4.0.0<span class="nt">&lt;/modelVersion&gt;</span>
-
-<span class="w">    </span><span class="nt">&lt;groupId&gt;</span>com.atguigu.mvc<span class="nt">&lt;/groupId&gt;</span>
-<span class="w">    </span><span class="nt">&lt;artifactId&gt;</span>springMVC-demo1<span class="nt">&lt;/artifactId&gt;</span>
-<span class="w">    </span><span class="nt">&lt;version&gt;</span>1.0-SNAPSHOT<span class="nt">&lt;/version&gt;</span>
-<span class="w">    </span><span class="nt">&lt;packaging&gt;</span>war<span class="nt">&lt;/packaging&gt;</span>
-
-<span class="w">    </span><span class="nt">&lt;dependencies&gt;</span>
-<span class="w">        </span><span class="cm">&lt;!-- SpringMVC --&gt;</span>
-<span class="w">        </span><span class="nt">&lt;dependency&gt;</span>
-<span class="w">            </span><span class="nt">&lt;groupId&gt;</span>org.springframework<span class="nt">&lt;/groupId&gt;</span>
-<span class="w">            </span><span class="nt">&lt;artifactId&gt;</span>spring-webmvc<span class="nt">&lt;/artifactId&gt;</span>
-<span class="w">            </span><span class="nt">&lt;version&gt;</span>5.3.1<span class="nt">&lt;/version&gt;</span>
-<span class="w">        </span><span class="nt">&lt;/dependency&gt;</span>
-
-<span class="w">        </span><span class="cm">&lt;!-- 日志 --&gt;</span>
-<span class="w">        </span><span class="nt">&lt;dependency&gt;</span>
-<span class="w">            </span><span class="nt">&lt;groupId&gt;</span>ch.qos.logback<span class="nt">&lt;/groupId&gt;</span>
-<span class="w">            </span><span class="nt">&lt;artifactId&gt;</span>logback-classic<span class="nt">&lt;/artifactId&gt;</span>
-<span class="w">            </span><span class="nt">&lt;version&gt;</span>1.2.3<span class="nt">&lt;/version&gt;</span>
-<span class="w">        </span><span class="nt">&lt;/dependency&gt;</span>
-
-<span class="w">        </span><span class="cm">&lt;!-- ServletAPI --&gt;</span>
-<span class="w">        </span><span class="nt">&lt;dependency&gt;</span>
-<span class="w">            </span><span class="nt">&lt;groupId&gt;</span>javax.servlet<span class="nt">&lt;/groupId&gt;</span>
-<span class="w">            </span><span class="nt">&lt;artifactId&gt;</span>javax.servlet-api<span class="nt">&lt;/artifactId&gt;</span>
-<span class="w">            </span><span class="nt">&lt;version&gt;</span>3.1.0<span class="nt">&lt;/version&gt;</span>
-<span class="w">            </span><span class="nt">&lt;scope&gt;</span>provided<span class="nt">&lt;/scope&gt;</span>
-<span class="w">        </span><span class="nt">&lt;/dependency&gt;</span>
-
-<span class="w">        </span><span class="cm">&lt;!-- Spring5和Thymeleaf整合包 --&gt;</span>
-<span class="w">        </span><span class="nt">&lt;dependency&gt;</span>
-<span class="w">            </span><span class="nt">&lt;groupId&gt;</span>org.thymeleaf<span class="nt">&lt;/groupId&gt;</span>
-<span class="w">            </span><span class="nt">&lt;artifactId&gt;</span>thymeleaf-spring5<span class="nt">&lt;/artifactId&gt;</span>
-<span class="w">            </span><span class="nt">&lt;version&gt;</span>3.0.12.RELEASE<span class="nt">&lt;/version&gt;</span>
-<span class="w">        </span><span class="nt">&lt;/dependency&gt;</span>
-<span class="w">    </span><span class="nt">&lt;/dependencies&gt;</span>
-
-
-<span class="nt">&lt;/project&gt;</span>
-</code></pre></div>
-
-<h3 id="srcmainjavacomatguigumvccontrollerhellocontrollerjava">src/main/java/com/atguigu/mvc/controller/HelloController.java</h3>
-<div class="codehilite"><pre><span></span><code><span class="kn">package</span><span class="w"> </span><span class="nn">com.atguigu.mvc.controller</span><span class="p">;</span>
-
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.stereotype.Controller</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.web.bind.annotation.RequestMapping</span><span class="p">;</span>
-
-<span class="cm">/**</span>
-<span class="cm"> * Date:2021/7/5</span>
-<span class="cm"> * Author:ybc</span>
-<span class="cm"> * Description:</span>
-<span class="cm"> */</span>
-<span class="nd">@Controller</span>
-<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">HelloController</span><span class="w"> </span><span class="p">{</span>
-
-<span class="w">    </span><span class="c1">//  通过@RequestMapping注解，可以通过请求路径匹配要处理的具体的请求</span>
-<span class="w">    </span><span class="c1">//  /表示的当前工程的上下文路径</span>
-<span class="w">    </span><span class="nd">@RequestMapping</span><span class="p">(</span><span class="s">&quot;/&quot;</span><span class="p">)</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">index</span><span class="p">(){</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;index&quot;</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
-
-<span class="w">    </span><span class="nd">@RequestMapping</span><span class="p">(</span><span class="s">&quot;/target&quot;</span><span class="p">)</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">toTarget</span><span class="p">(){</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;target&quot;</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
-
-<span class="p">}</span>
-</code></pre></div>
-
-<h3 id="srcmainresourcesspringmvcxml">src/main/resources/springMVC.xml</h3>
-<div class="codehilite"><pre><span></span><code><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
-<span class="nt">&lt;beans</span><span class="w"> </span><span class="na">xmlns=</span><span class="s">&quot;http://www.springframework.org/schema/beans&quot;</span>
-<span class="w">       </span><span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
-<span class="w">       </span><span class="na">xmlns:context=</span><span class="s">&quot;http://www.springframework.org/schema/context&quot;</span>
-<span class="w">       </span><span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd&quot;</span><span class="nt">&gt;</span>
-
-<span class="w">    </span><span class="cm">&lt;!--扫描控制层组件--&gt;</span>
-<span class="w">    </span><span class="nt">&lt;context:component-scan</span><span class="w"> </span><span class="na">base-package=</span><span class="s">&quot;com.atguigu.mvc.controller&quot;</span><span class="nt">&gt;&lt;/context:component-scan&gt;</span>
-
-<span class="w">    </span><span class="cm">&lt;!-- 配置Thymeleaf视图解析器 --&gt;</span>
-<span class="w">    </span><span class="nt">&lt;bean</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;viewResolver&quot;</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;org.thymeleaf.spring5.view.ThymeleafViewResolver&quot;</span><span class="nt">&gt;</span>
-<span class="w">        </span><span class="nt">&lt;property</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;order&quot;</span><span class="w"> </span><span class="na">value=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
-<span class="w">        </span><span class="nt">&lt;property</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;characterEncoding&quot;</span><span class="w"> </span><span class="na">value=</span><span class="s">&quot;UTF-8&quot;</span><span class="nt">/&gt;</span>
-<span class="w">        </span><span class="nt">&lt;property</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;templateEngine&quot;</span><span class="nt">&gt;</span>
-<span class="w">            </span><span class="nt">&lt;bean</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;org.thymeleaf.spring5.SpringTemplateEngine&quot;</span><span class="nt">&gt;</span>
-<span class="w">                </span><span class="nt">&lt;property</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;templateResolver&quot;</span><span class="nt">&gt;</span>
-<span class="w">                    </span><span class="nt">&lt;bean</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver&quot;</span><span class="nt">&gt;</span>
-<span class="w">                        </span><span class="cm">&lt;!-- 视图前缀 --&gt;</span>
-<span class="w">                        </span><span class="nt">&lt;property</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;prefix&quot;</span><span class="w"> </span><span class="na">value=</span><span class="s">&quot;/WEB-INF/templates/&quot;</span><span class="nt">/&gt;</span>
-<span class="w">                        </span><span class="cm">&lt;!-- 视图后缀 --&gt;</span>
-<span class="w">                        </span><span class="nt">&lt;property</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;suffix&quot;</span><span class="w"> </span><span class="na">value=</span><span class="s">&quot;.html&quot;</span><span class="nt">/&gt;</span>
-<span class="w">                        </span><span class="nt">&lt;property</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;templateMode&quot;</span><span class="w"> </span><span class="na">value=</span><span class="s">&quot;HTML5&quot;</span><span class="nt">/&gt;</span>
-<span class="w">                        </span><span class="nt">&lt;property</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;characterEncoding&quot;</span><span class="w"> </span><span class="na">value=</span><span class="s">&quot;UTF-8&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
-<span class="w">                    </span><span class="nt">&lt;/bean&gt;</span>
-<span class="w">                </span><span class="nt">&lt;/property&gt;</span>
-<span class="w">            </span><span class="nt">&lt;/bean&gt;</span>
-<span class="w">        </span><span class="nt">&lt;/property&gt;</span>
-<span class="w">    </span><span class="nt">&lt;/bean&gt;</span>
-
-<span class="nt">&lt;/beans&gt;</span>
-</code></pre></div>
-
-<h3 id="srcmainwebappweb-inftemplatesindexhtml">src/main/webapp/WEB-INF/templates/index.html</h3>
-<div class="codehilite"><pre><span></span><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
-<span class="p">&lt;</span><span class="nt">html</span> <span class="na">lang</span><span class="o">=</span><span class="s">&quot;en&quot;</span> <span class="na">xmlns:th</span><span class="o">=</span><span class="s">&quot;http://www.thymeleaf.org&quot;</span><span class="p">&gt;</span>
-<span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">charset</span><span class="o">=</span><span class="s">&quot;UTF-8&quot;</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>首页<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
-<span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
-<span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>首页<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
-<span class="p">&lt;</span><span class="nt">a</span> <span class="na">th:href</span><span class="o">=</span><span class="s">&quot;@{/target}&quot;</span><span class="p">&gt;</span>访问目标页面target.html<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
-</code></pre></div>
-
-<h3 id="srcmainwebappweb-inftemplatestargethtml">src/main/webapp/WEB-INF/templates/target.html</h3>
-<div class="codehilite"><pre><span></span><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
-<span class="p">&lt;</span><span class="nt">html</span> <span class="na">lang</span><span class="o">=</span><span class="s">&quot;en&quot;</span><span class="p">&gt;</span>
-<span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">charset</span><span class="o">=</span><span class="s">&quot;UTF-8&quot;</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>目标<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
-<span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
-HelloWorld
-<span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
-</code></pre></div>
-
-<h3 id="srcmainwebappweb-infwebxml">src/main/webapp/WEB-INF/web.xml</h3>
-<div class="codehilite"><pre><span></span><code><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
-<span class="nt">&lt;web-app</span><span class="w"> </span><span class="na">xmlns=</span><span class="s">&quot;http://xmlns.jcp.org/xml/ns/javaee&quot;</span>
-<span class="w">         </span><span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
-<span class="w">         </span><span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd&quot;</span>
-<span class="w">         </span><span class="na">version=</span><span class="s">&quot;4.0&quot;</span><span class="nt">&gt;</span>
-
-<span class="w">    </span><span class="cm">&lt;!--</span>
-<span class="cm">        注册springMVC的前端控制器，对浏览器所发送的请求统一进行处理</span>
-<span class="cm">        在此配置下，springMVC的配置文件具有默认的位置和名称</span>
-<span class="cm">        默认的位置：WEB-INF</span>
-<span class="cm">        默认的名称：&lt;servlet-name&gt;-servlet.xml</span>
-<span class="cm">        若要为springMVC的配置文件设置自定义的位置和名称</span>
-<span class="cm">        需要在servlet标签中添加init-param</span>
-<span class="cm">        &lt;init-param&gt;</span>
-<span class="cm">            &lt;param-name&gt;contextConfigLocation&lt;/param-name&gt;</span>
-<span class="cm">            &lt;param-value&gt;classpath:springMVC.xml&lt;/param-value&gt;</span>
-<span class="cm">        &lt;/init-param&gt;</span>
-<span class="cm">        load-on-startup：将前端控制器DispatcherServlet的初始化时间提前到服务器启动时</span>
-<span class="cm">    --&gt;</span>
-<span class="w">    </span><span class="nt">&lt;servlet&gt;</span>
-<span class="w">        </span><span class="nt">&lt;servlet-name&gt;</span>springMVC<span class="nt">&lt;/servlet-name&gt;</span>
-<span class="w">        </span><span class="nt">&lt;servlet-class&gt;</span>org.springframework.web.servlet.DispatcherServlet<span class="nt">&lt;/servlet-class&gt;</span>
-<span class="w">        </span><span class="nt">&lt;init-param&gt;</span>
-<span class="w">            </span><span class="nt">&lt;param-name&gt;</span>contextConfigLocation<span class="nt">&lt;/param-name&gt;</span>
-<span class="w">            </span><span class="nt">&lt;param-value&gt;</span>classpath:springMVC.xml<span class="nt">&lt;/param-value&gt;</span>
-<span class="w">        </span><span class="nt">&lt;/init-param&gt;</span>
-<span class="w">        </span><span class="nt">&lt;load-on-startup&gt;</span>1<span class="nt">&lt;/load-on-startup&gt;</span>
-<span class="w">    </span><span class="nt">&lt;/servlet&gt;</span>
-<span class="w">    </span><span class="nt">&lt;servlet-mapping&gt;</span>
-<span class="w">        </span><span class="nt">&lt;servlet-name&gt;</span>springMVC<span class="nt">&lt;/servlet-name&gt;</span>
-<span class="w">        </span><span class="nt">&lt;url-pattern&gt;</span>/<span class="nt">&lt;/url-pattern&gt;</span>
-<span class="w">    </span><span class="nt">&lt;/servlet-mapping&gt;</span>
-
-<span class="nt">&lt;/web-app&gt;</span>
-</code></pre></div>
+<ol>
+<li>
+<p>用户向服务器发送请求，请求被SpringMVC 前端控制器 DispatcherServlet捕获。</p>
+</li>
+<li>
+<p>DispatcherServlet对请求URL进行解析，得到请求资源标识符（URI），判断请求URI对应的映射：</p>
+</li>
+</ol>
+<p>a) 不存在</p>
+<p>i. 再判断是否配置了mvc:default-servlet-handler</p>
+<p>ii. 如果没配置，则控制台报映射查找不到，客户端展示404错误</p>
+<p><img alt="image-20210709214911404" src="assets/images/img006.png" /></p>
+<p><img alt="image-20210709214947432" src="assets/images/img007.png" /></p>
+<p>iii. 如果有配置，则访问目标资源（一般为静态资源，如：JS,CSS,HTML），找不到客户端也会展示404错误</p>
+<p><img alt="image-20210709215255693" src="assets/images/img008.png" /></p>
+<p><img alt="image-20210709215336097" src="assets/images/img009.png" /></p>
+<p>b) 存在则执行下面的流程</p>
+<ol>
+<li>
+<p>根据该URI，调用HandlerMapping获得该Handler配置的所有相关的对象（包括Handler对象以及Handler对象对应的拦截器），最后以HandlerExecutionChain执行链对象的形式返回。</p>
+</li>
+<li>
+<p>DispatcherServlet 根据获得的Handler，选择一个合适的HandlerAdapter。</p>
+</li>
+<li>
+<p>如果成功获得HandlerAdapter，此时将开始执行拦截器的preHandler(…)方法【正向】</p>
+</li>
+<li>
+<p>提取Request中的模型数据，填充Handler入参，开始执行Handler（Controller)方法，处理请求。在填充Handler的入参过程中，根据你的配置，Spring将帮你做一些额外的工作：</p>
+</li>
+</ol>
+<p>a) HttpMessageConveter： 将请求消息（如Json、xml等数据）转换成一个对象，将对象转换为指定的响应信息</p>
+<p>b) 数据转换：对请求消息进行数据转换。如String转换成Integer、Double等</p>
+<p>c) 数据格式化：对请求消息进行数据格式化。 如将字符串转换成格式化数字或格式化日期等</p>
+<p>d) 数据验证： 验证数据的有效性（长度、格式等），验证结果存储到BindingResult或Error中</p>
+<ol>
+<li>
+<p>Handler执行完成后，向DispatcherServlet 返回一个ModelAndView对象。</p>
+</li>
+<li>
+<p>此时将开始执行拦截器的postHandle(...)方法【逆向】。</p>
+</li>
+<li>
+<p>根据返回的ModelAndView（此时会判断是否存在异常：如果存在异常，则执行HandlerExceptionResolver进行异常处理）选择一个适合的ViewResolver进行视图解析，根据Model和View，来渲染视图。</p>
+</li>
+<li>
+<p>渲染视图完毕执行拦截器的afterCompletion(…)方法【逆向】。</p>
+</li>
+<li>
+<p>将渲染结果返回给客户端。</p>
+</li>
+</ol>
   </div>
 </section>

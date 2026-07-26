@@ -1,11 +1,29 @@
 <section class="chapter" id="chapter-26" data-chapter="26">
-  <h1>1、使用ServletAPI向request域对象共享数据</h1>
+  <h1>7、解决获取请求参数的乱码问题</h1>
   <div class="chapter-content">
-<div class="codehilite"><pre><span></span><code><span class="nd">@RequestMapping</span><span class="p">(</span><span class="s">&quot;/testServletAPI&quot;</span><span class="p">)</span>
-<span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">testServletAPI</span><span class="p">(</span><span class="n">HttpServletRequest</span><span class="w"> </span><span class="n">request</span><span class="p">){</span>
-<span class="w">    </span><span class="n">request</span><span class="p">.</span><span class="na">setAttribute</span><span class="p">(</span><span class="s">&quot;testScope&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;hello,servletAPI&quot;</span><span class="p">);</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;success&quot;</span><span class="p">;</span>
-<span class="p">}</span>
+<p>解决获取请求参数的乱码问题，可以使用SpringMVC提供的编码过滤器CharacterEncodingFilter，但是必须在web.xml中进行注册</p>
+<div class="codehilite"><pre><span></span><code><span class="cm">&lt;!--配置springMVC的编码过滤器--&gt;</span>
+<span class="nt">&lt;filter&gt;</span>
+<span class="w">    </span><span class="nt">&lt;filter-name&gt;</span>CharacterEncodingFilter<span class="nt">&lt;/filter-name&gt;</span>
+<span class="w">    </span><span class="nt">&lt;filter-class&gt;</span>org.springframework.web.filter.CharacterEncodingFilter<span class="nt">&lt;/filter-class&gt;</span>
+<span class="w">    </span><span class="nt">&lt;init-param&gt;</span>
+<span class="w">        </span><span class="nt">&lt;param-name&gt;</span>encoding<span class="nt">&lt;/param-name&gt;</span>
+<span class="w">        </span><span class="nt">&lt;param-value&gt;</span>UTF-8<span class="nt">&lt;/param-value&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/init-param&gt;</span>
+<span class="w">    </span><span class="nt">&lt;init-param&gt;</span>
+<span class="w">        </span><span class="nt">&lt;param-name&gt;</span>forceResponseEncoding<span class="nt">&lt;/param-name&gt;</span>
+<span class="w">        </span><span class="nt">&lt;param-value&gt;</span>true<span class="nt">&lt;/param-value&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/init-param&gt;</span>
+<span class="nt">&lt;/filter&gt;</span>
+<span class="nt">&lt;filter-mapping&gt;</span>
+<span class="w">    </span><span class="nt">&lt;filter-name&gt;</span>CharacterEncodingFilter<span class="nt">&lt;/filter-name&gt;</span>
+<span class="w">    </span><span class="nt">&lt;url-pattern&gt;</span>/*<span class="nt">&lt;/url-pattern&gt;</span>
+<span class="nt">&lt;/filter-mapping&gt;</span>
 </code></pre></div>
+
+<blockquote>
+<p>注：</p>
+<p>SpringMVC中处理编码的过滤器一定要配置到其他过滤器之前，否则无效</p>
+</blockquote>
   </div>
 </section>

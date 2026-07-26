@@ -1,84 +1,9 @@
 <section class="chapter" id="chapter-66" data-chapter="66">
-  <h1>3、创建WebConfig配置类，代替SpringMVC的配置文件</h1>
+  <h1>2、创建SpringConfig配置类，代替spring的配置文件</h1>
   <div class="chapter-content">
 <div class="codehilite"><pre><span></span><code><span class="nd">@Configuration</span>
-<span class="c1">//扫描组件</span>
-<span class="nd">@ComponentScan</span><span class="p">(</span><span class="s">&quot;com.atguigu.mvc.controller&quot;</span><span class="p">)</span>
-<span class="c1">//开启MVC注解驱动</span>
-<span class="nd">@EnableWebMvc</span>
-<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">WebConfig</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">WebMvcConfigurer</span><span class="w"> </span><span class="p">{</span>
-
-<span class="w">    </span><span class="c1">//使用默认的servlet处理静态资源</span>
-<span class="w">    </span><span class="nd">@Override</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">configureDefaultServletHandling</span><span class="p">(</span><span class="n">DefaultServletHandlerConfigurer</span><span class="w"> </span><span class="n">configurer</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">configurer</span><span class="p">.</span><span class="na">enable</span><span class="p">();</span>
-<span class="w">    </span><span class="p">}</span>
-
-<span class="w">    </span><span class="c1">//配置文件上传解析器</span>
-<span class="w">    </span><span class="nd">@Bean</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">CommonsMultipartResolver</span><span class="w"> </span><span class="nf">multipartResolver</span><span class="p">(){</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">CommonsMultipartResolver</span><span class="p">();</span>
-<span class="w">    </span><span class="p">}</span>
-
-<span class="w">    </span><span class="c1">//配置拦截器</span>
-<span class="w">    </span><span class="nd">@Override</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">addInterceptors</span><span class="p">(</span><span class="n">InterceptorRegistry</span><span class="w"> </span><span class="n">registry</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">FirstInterceptor</span><span class="w"> </span><span class="n">firstInterceptor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">FirstInterceptor</span><span class="p">();</span>
-<span class="w">        </span><span class="n">registry</span><span class="p">.</span><span class="na">addInterceptor</span><span class="p">(</span><span class="n">firstInterceptor</span><span class="p">).</span><span class="na">addPathPatterns</span><span class="p">(</span><span class="s">&quot;/**&quot;</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-
-<span class="w">    </span><span class="c1">//配置视图控制</span>
-
-<span class="w">    </span><span class="cm">/*@Override</span>
-<span class="cm">    public void addViewControllers(ViewControllerRegistry registry) {</span>
-<span class="cm">        registry.addViewController(&quot;/&quot;).setViewName(&quot;index&quot;);</span>
-<span class="cm">    }*/</span>
-
-<span class="w">    </span><span class="c1">//配置异常映射</span>
-<span class="w">    </span><span class="cm">/*@Override</span>
-<span class="cm">    public void configureHandlerExceptionResolvers(List&lt;HandlerExceptionResolver&gt; resolvers) {</span>
-<span class="cm">        SimpleMappingExceptionResolver exceptionResolver = new SimpleMappingExceptionResolver();</span>
-<span class="cm">        Properties prop = new Properties();</span>
-<span class="cm">        prop.setProperty(&quot;java.lang.ArithmeticException&quot;, &quot;error&quot;);</span>
-<span class="cm">        //设置异常映射</span>
-<span class="cm">        exceptionResolver.setExceptionMappings(prop);</span>
-<span class="cm">        //设置共享异常信息的键</span>
-<span class="cm">        exceptionResolver.setExceptionAttribute(&quot;ex&quot;);</span>
-<span class="cm">        resolvers.add(exceptionResolver);</span>
-<span class="cm">    }*/</span>
-
-<span class="w">    </span><span class="c1">//配置生成模板解析器</span>
-<span class="w">    </span><span class="nd">@Bean</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">ITemplateResolver</span><span class="w"> </span><span class="nf">templateResolver</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">WebApplicationContext</span><span class="w"> </span><span class="n">webApplicationContext</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ContextLoader</span><span class="p">.</span><span class="na">getCurrentWebApplicationContext</span><span class="p">();</span>
-<span class="w">        </span><span class="c1">// ServletContextTemplateResolver需要一个ServletContext作为构造参数，可通过WebApplicationContext 的方法获得</span>
-<span class="w">        </span><span class="n">ServletContextTemplateResolver</span><span class="w"> </span><span class="n">templateResolver</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ServletContextTemplateResolver</span><span class="p">(</span>
-<span class="w">                </span><span class="n">webApplicationContext</span><span class="p">.</span><span class="na">getServletContext</span><span class="p">());</span>
-<span class="w">        </span><span class="n">templateResolver</span><span class="p">.</span><span class="na">setPrefix</span><span class="p">(</span><span class="s">&quot;/WEB-INF/templates/&quot;</span><span class="p">);</span>
-<span class="w">        </span><span class="n">templateResolver</span><span class="p">.</span><span class="na">setSuffix</span><span class="p">(</span><span class="s">&quot;.html&quot;</span><span class="p">);</span>
-<span class="w">        </span><span class="n">templateResolver</span><span class="p">.</span><span class="na">setCharacterEncoding</span><span class="p">(</span><span class="s">&quot;UTF-8&quot;</span><span class="p">);</span>
-<span class="w">        </span><span class="n">templateResolver</span><span class="p">.</span><span class="na">setTemplateMode</span><span class="p">(</span><span class="n">TemplateMode</span><span class="p">.</span><span class="na">HTML</span><span class="p">);</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">templateResolver</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
-
-<span class="w">    </span><span class="c1">//生成模板引擎并为模板引擎注入模板解析器</span>
-<span class="w">    </span><span class="nd">@Bean</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">SpringTemplateEngine</span><span class="w"> </span><span class="nf">templateEngine</span><span class="p">(</span><span class="n">ITemplateResolver</span><span class="w"> </span><span class="n">templateResolver</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">SpringTemplateEngine</span><span class="w"> </span><span class="n">templateEngine</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SpringTemplateEngine</span><span class="p">();</span>
-<span class="w">        </span><span class="n">templateEngine</span><span class="p">.</span><span class="na">setTemplateResolver</span><span class="p">(</span><span class="n">templateResolver</span><span class="p">);</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">templateEngine</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
-
-<span class="w">    </span><span class="c1">//生成视图解析器并未解析器注入模板引擎</span>
-<span class="w">    </span><span class="nd">@Bean</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">ViewResolver</span><span class="w"> </span><span class="nf">viewResolver</span><span class="p">(</span><span class="n">SpringTemplateEngine</span><span class="w"> </span><span class="n">templateEngine</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">ThymeleafViewResolver</span><span class="w"> </span><span class="n">viewResolver</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ThymeleafViewResolver</span><span class="p">();</span>
-<span class="w">        </span><span class="n">viewResolver</span><span class="p">.</span><span class="na">setCharacterEncoding</span><span class="p">(</span><span class="s">&quot;UTF-8&quot;</span><span class="p">);</span>
-<span class="w">        </span><span class="n">viewResolver</span><span class="p">.</span><span class="na">setTemplateEngine</span><span class="p">(</span><span class="n">templateEngine</span><span class="p">);</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">viewResolver</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
-
-
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">SpringConfig</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">//ssm整合之后，spring的配置信息写在此类中</span>
 <span class="p">}</span>
 </code></pre></div>
   </div>

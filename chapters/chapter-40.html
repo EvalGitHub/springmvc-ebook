@@ -1,42 +1,39 @@
 <section class="chapter" id="chapter-40" data-chapter="40">
-  <h1>3、HiddenHttpMethodFilter</h1>
+  <h1>2、RESTful的实现</h1>
   <div class="chapter-content">
-<p>由于浏览器只支持发送get和post方式的请求，那么该如何发送put和delete请求呢？</p>
-<p>SpringMVC 提供了 <strong>HiddenHttpMethodFilter</strong> 帮助我们<strong>将 POST 请求转换为 DELETE 或 PUT 请求</strong></p>
-<p><strong>HiddenHttpMethodFilter</strong> 处理put和delete请求的条件：</p>
-<p>a&gt;当前请求的请求方式必须为post</p>
-<p>b&gt;当前请求必须传输请求参数_method</p>
-<p>满足以上条件，<strong>HiddenHttpMethodFilter</strong> 过滤器就会将当前请求的请求方式转换为请求参数_method的值，因此请求参数_method的值才是最终的请求方式</p>
-<p>在web.xml中注册<strong>HiddenHttpMethodFilter</strong> </p>
-<div class="codehilite"><pre><span></span><code><span class="nt">&lt;filter&gt;</span>
-<span class="w">    </span><span class="nt">&lt;filter-name&gt;</span>HiddenHttpMethodFilter<span class="nt">&lt;/filter-name&gt;</span>
-<span class="w">    </span><span class="nt">&lt;filter-class&gt;</span>org.springframework.web.filter.HiddenHttpMethodFilter<span class="nt">&lt;/filter-class&gt;</span>
-<span class="nt">&lt;/filter&gt;</span>
-<span class="nt">&lt;filter-mapping&gt;</span>
-<span class="w">    </span><span class="nt">&lt;filter-name&gt;</span>HiddenHttpMethodFilter<span class="nt">&lt;/filter-name&gt;</span>
-<span class="w">    </span><span class="nt">&lt;url-pattern&gt;</span>/*<span class="nt">&lt;/url-pattern&gt;</span>
-<span class="nt">&lt;/filter-mapping&gt;</span>
-</code></pre></div>
-
-<blockquote>
-<p>注：</p>
-<p>目前为止，SpringMVC中提供了两个过滤器：CharacterEncodingFilter和HiddenHttpMethodFilter</p>
-<p>在web.xml中注册时，必须先注册CharacterEncodingFilter，再注册HiddenHttpMethodFilter</p>
-<p>原因：</p>
-<ul>
-<li>
-<p>在 CharacterEncodingFilter 中通过 request.setCharacterEncoding(encoding) 方法设置字符集的</p>
-</li>
-<li>
-<p>request.setCharacterEncoding(encoding) 方法要求前面不能有任何获取请求参数的操作</p>
-</li>
-<li>
-<p>而 HiddenHttpMethodFilter 恰恰有一个获取请求方式的操作：</p>
-</li>
-<li>
-<p><code>String paramValue = request.getParameter(this.methodParam);</code></p>
-</li>
-</ul>
-</blockquote>
+<p>具体说，就是 HTTP 协议里面，四个表示操作方式的动词：GET、POST、PUT、DELETE。</p>
+<p>它们分别对应四种基本操作：GET 用来获取资源，POST 用来新建资源，PUT 用来更新资源，DELETE 用来删除资源。</p>
+<p>REST 风格提倡 URL 地址使用统一的风格设计，从前到后各个单词使用斜杠分开，不使用问号键值对方式携带请求参数，而是将要发送给服务器的数据作为 URL 地址的一部分，以保证整体风格的一致性。</p>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>传统方式</th>
+<th>REST风格</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>查询操作</td>
+<td>getUserById?id=1</td>
+<td>user/1--&gt;get请求方式</td>
+</tr>
+<tr>
+<td>保存操作</td>
+<td>saveUser</td>
+<td>user--&gt;post请求方式</td>
+</tr>
+<tr>
+<td>删除操作</td>
+<td>deleteUser?id=1</td>
+<td>user/1--&gt;delete请求方式</td>
+</tr>
+<tr>
+<td>更新操作</td>
+<td>updateUser</td>
+<td>user--&gt;put请求方式</td>
+</tr>
+</tbody>
+</table>
   </div>
 </section>
